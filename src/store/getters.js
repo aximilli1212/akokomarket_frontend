@@ -5,6 +5,8 @@ export default {
   authorized: state => !!state.token,
   authstatus: state => state.authStatus,
   customerList: state => state.customerList,
+  companyList: state => state.companyList,
+  productList: state => state.productList,
   requestList: state => state.requestList,
   surveyList: state => state.surveyList,
   transactionList: state => state.transactionList,

@@ -108,6 +108,7 @@
               <td>{{ item.date_created }}</td>
             </template>
           </v-data-table>
+
         </material-card>
       </v-flex>
     </v-layout>

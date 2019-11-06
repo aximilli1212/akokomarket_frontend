@@ -16,6 +16,8 @@ export default {
   },
   tableList: [],
   customerList: [],
+  companyList: [],
+  productList: [],
   surveyList: [],
   depotList: [],
   transactionList: [],

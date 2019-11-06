@@ -12,7 +12,7 @@
         md8
       >
         <material-card
-          color="general"
+          color="primary"
           title="Edit Profile"
           text="Complete your profile"
         >

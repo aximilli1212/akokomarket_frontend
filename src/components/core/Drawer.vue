@@ -32,6 +32,8 @@
           </v-list-tile-title>
         </v-list-tile>
         <v-divider/>
+
+
         <v-list-tile
           v-if="responsive"
         >
@@ -41,6 +43,8 @@
             color="purple"
           />
         </v-list-tile>
+
+
         <v-list-tile
           v-for="(link, i) in links"
           :key="i"
@@ -56,6 +60,51 @@
             v-text="link.text"
           />
         </v-list-tile>
+<!--        <v-list-group-->
+<!--                prepend-icon="cart-arrow-down"-->
+<!--                value="true"-->
+<!--        >-->
+<!--          <template v-slot:activator>-->
+<!--            <v-list-item-title>Products</v-list-item-title>-->
+<!--          </template>-->
+<!--        <v-list-tile-->
+
+<!--          to="dash"-->
+<!--          active-class="grey"-->
+<!--          avatar-->
+<!--          class="v-list-item"-->
+<!--        >-->
+<!--          <v-list-tile-action>-->
+<!--            <v-icon>mdi-circle</v-icon>-->
+<!--          </v-list-tile-action>-->
+<!--          <v-list-tile-title>Eggs</v-list-tile-title>-->
+<!--        </v-list-tile>-->
+<!--          <v-list-tile-->
+
+<!--          to="dash"-->
+<!--          active-class="grey"-->
+<!--          avatar-->
+<!--          class="v-list-item"-->
+<!--        >-->
+<!--          <v-list-tile-action>-->
+<!--            <v-icon>mdi-map</v-icon>-->
+<!--          </v-list-tile-action>-->
+<!--          <v-list-tile-title>Chicken</v-list-tile-title>-->
+<!--        </v-list-tile>-->
+<!--          <v-list-tile-->
+
+<!--          to="dash"-->
+<!--          active-class="grey"-->
+<!--          avatar-->
+<!--          class="v-list-item"-->
+<!--        >-->
+<!--          <v-list-tile-action>-->
+<!--            <v-icon>mdi-leaf</v-icon>-->
+<!--          </v-list-tile-action>-->
+<!--          <v-list-tile-title>Maize</v-list-tile-title>-->
+<!--        </v-list-tile>-->
+<!--        </v-list-group>-->
+
       </v-layout>
     </v-img>
   </v-navigation-drawer>
@@ -112,6 +161,11 @@ export default {
         icon: "mdi-account-multiple",
       },
       {
+        to: "/dashboard/company",
+        text: "Company",
+        icon: "mdi-domain",
+      },
+      {
         to: "/dashboard/depot",
         text: "Depot",
         icon: "mdi-home",
@@ -129,13 +183,8 @@ export default {
       {
         to: "/dashboard/products",
         text: "Products",
-        icon: "pe-7s-shopbag",
+        icon: "mdi-tag",
       },
-      {
-        to: "/dashboard/user",
-        text: "User Profile",
-        icon: "pe-7s-user",
-      }
 
 
     ],

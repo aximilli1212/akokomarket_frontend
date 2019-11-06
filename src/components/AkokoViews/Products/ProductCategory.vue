@@ -49,29 +49,29 @@
                           box
                   ></v-text-field>
                 </v-flex><v-flex xs6 sm6 md6>
-                  <v-text-field
-                          label="Occupation"
-                          v-model="survey.occupation"
-                          prepend-inner-icon="mdi-briefcase"
-                          box
-                  ></v-text-field>
-                </v-flex><v-flex xs4 sm4 md4>
-                  <v-select
-                          label="Product"
-                          :items="products"
-                          v-model="survey.product"
-                          prepend-inner-icon="mdi-tag-outline"
-                          box
-                  ></v-select>
-                </v-flex><v-flex xs4 sm4 md4>
-                  <v-select
-                          label="Production Type"
-                          :items="production_types"
-                          v-model="survey.production_type"
-                          prepend-inner-icon="mdi-bookmark"
-                          box
-                  ></v-select>
-                </v-flex>
+                <v-text-field
+                        label="Occupation"
+                        v-model="survey.occupation"
+                        prepend-inner-icon="mdi-briefcase"
+                        box
+                ></v-text-field>
+              </v-flex><v-flex xs4 sm4 md4>
+                <v-select
+                        label="Product"
+                        :items="products"
+                        v-model="survey.product"
+                        prepend-inner-icon="mdi-tag-outline"
+                        box
+                ></v-select>
+              </v-flex><v-flex xs4 sm4 md4>
+                <v-select
+                        label="Production Type"
+                        :items="production_types"
+                        v-model="survey.production_type"
+                        prepend-inner-icon="mdi-bookmark"
+                        box
+                ></v-select>
+              </v-flex>
                 <v-flex xs4 sm4 md4>
                   <v-text-field
                           label=" Capacity"
@@ -172,7 +172,7 @@
         name:'',
         phone:'',
         location:'',
-         product:'',
+        product:'',
         occupation:'',
         production_type:'',
         production_capacity:'',
@@ -220,8 +220,8 @@
                 .catch(err => {
                           console.log(err)
                           this.closeup();
-                  this.loader = false;
-                  this.$store.commit('setSnack',{color:"error",status_msg:"Error", added_msg:"Could not insert data." })
+                          this.loader = false;
+                          this.$store.commit('setSnack',{color:"error",status_msg:"Error", added_msg:"Could not insert data." })
 
                         }
                 )
@@ -236,8 +236,8 @@
                 })
                 .catch(err => {
                           console.log(err)
-                  this.loader = false;
-                  this.closeup();
+                          this.loader = false;
+                          this.closeup();
                           this.$store.commit('setSnack',{color:"error",status_msg:"Error", added_msg:"Could not insert data." })
 
                         }

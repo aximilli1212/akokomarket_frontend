@@ -129,6 +129,14 @@ export default [
         component: () => import(`@/components/AkokoViews/Requests.vue`)
       },
       {
+        path: 'company',
+        meta: {
+          name: 'Company',
+          requiresAuth: true
+        },
+        component: () => import(`@/components/AkokoViews/Company.vue`)
+      },
+      {
         path: 'customers',
         meta: {
           name: 'Customers',
@@ -159,14 +167,24 @@ export default [
           requiresAuth: true
         },
         component: () => import(`@/components/AkokoViews/SellSurvey.vue`)
-      }, {
+      },
+      {
+        path: 'product_category',
+        meta: {
+          name: 'ProductCategory',
+          requiresAuth: true
+        },
+        component: () => import(`@/components/AkokoViews/Products/ProductCategory.vue`)
+      },
+      {
         path: 'products',
         meta: {
           name: 'Products',
           requiresAuth: true
         },
-        component: () => import(`@/components/AkokoViews/Products.vue`)
-      }, {
+        component: () => import(`@/components/AkokoViews/Products/Products.vue`)
+      },
+      {
         path: 'user',
         meta: {
           name: 'User',

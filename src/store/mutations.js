@@ -31,6 +31,9 @@ export default {
   setCustomerList (state, customerList) {
     state.customerList = customerList;
   },
+  setCompanyList (state, companyList) {
+    state.companyList = companyList;
+  },
 
   setDepotList (state, customerList) {
     state.depotList = customerList;
@@ -46,6 +49,9 @@ export default {
 
   setSurveyList (state, surveyList) {
     state.surveyList = surveyList;
+  },
+  setProductList (state, productList) {
+    state.productList = productList;
   },
 
 }

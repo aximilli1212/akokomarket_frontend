@@ -90,6 +90,50 @@ export default {
     })
   },
 
+  getCompanyList ({ commit }, tableName) {
+    axios.get('companys')
+      .then(response => {
+        let CompanyList = response.data.data
+        commit('setCompanyList', CompanyList)
+      })
+      .catch(error => console.log(error))
+  },
+
+  addCompany ({ commit, dispatch }, payload) {
+    let self = this;
+    commit('setBtnLoader',true);
+    return new Promise((resolve, reject) => {
+      commit('auth_request');
+      axios.post('/companys/create', payload)
+        .then(response => {
+          console.log(response)
+          dispatch('getCustomerList');
+          commit('setBtnLoader',false);
+          resolve(response)
+        })
+        .catch(err => {
+          reject(err)
+          commit('setBtnLoader',false);
+        })
+    })
+  },
+  editCompany ({ commit, dispatch }, payload) {
+    let self = this;
+    let id = payload.id;
+    return new Promise((resolve, reject) => {
+      commit('auth_request');
+      axios.put('/companys/'+id, payload)
+        .then(response => {
+          console.log(response)
+          dispatch('getCompanyList');
+          resolve(response)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
+
   getDepotList ({ commit }, tableName) {
     axios.get('depot')
       .then(response => {
@@ -167,6 +211,108 @@ export default {
         commit('setSurveyList', SurveyList)
       })
       .catch(error => console.log(error))
+  },
+  addSellSurvey ({ commit, dispatch }, payload) {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      commit('auth_request');
+      axios.post('/sell_survey/create', payload)
+        .then(response => {
+          console.log(response)
+          dispatch('getSellSurveyList');
+          resolve(response)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
+  editSellSurvey ({ commit, dispatch }, payload) {
+    let self = this;
+    let id = payload.id;
+    return new Promise((resolve, reject) => {
+      commit('auth_request');
+      axios.put('/sell_survey/'+id, payload)
+        .then(response => {
+          console.log(response)
+          dispatch('getSellSurveyList');
+          resolve(response)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
+  deleteSellSurvey ({ commit, dispatch }, payload) {
+    let id = payload.id;
+    return new Promise((resolve, reject) => {
+      commit('auth_request');
+      axios.delete('/sell_survey/'+id)
+        .then(response => {
+          console.log(response)
+          dispatch('getSellSurveyList');
+          resolve(response)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
+
+  getProductList ({ commit }, tableName) {
+    axios.get('sell_survey')
+      .then(response => {
+        let SurveyList = response.data.data;
+        console.log(SurveyList);
+        commit('setSurveyList', SurveyList)
+      })
+      .catch(error => console.log(error))
+  },
+  addProduct ({ commit, dispatch }, payload) {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      commit('auth_request');
+      axios.post('/sell_survey/create', payload)
+        .then(response => {
+          console.log(response)
+          dispatch('getSellSurveyList');
+          resolve(response)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
+  editProduct({ commit, dispatch }, payload) {
+    let self = this;
+    let id = payload.id;
+    return new Promise((resolve, reject) => {
+      commit('auth_request');
+      axios.put('/sell_survey/'+id, payload)
+        .then(response => {
+          console.log(response)
+          dispatch('getSellSurveyList');
+          resolve(response)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
+  deleteProduct ({ commit, dispatch }, payload) {
+    let id = payload.id;
+    return new Promise((resolve, reject) => {
+      commit('auth_request');
+      axios.delete('/sell_survey/'+id)
+        .then(response => {
+          console.log(response)
+          dispatch('getSellSurveyList');
+          resolve(response)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
   },
 
   // autoRefreshToken ({ commit }) {
