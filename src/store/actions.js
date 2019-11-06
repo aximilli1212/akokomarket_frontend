@@ -260,11 +260,11 @@ export default {
   },
 
   getProductList ({ commit }, tableName) {
-    axios.get('sell_survey')
+    axios.get('products')
       .then(response => {
         let SurveyList = response.data.data;
         console.log(SurveyList);
-        commit('setSurveyList', SurveyList)
+        commit('setProductList', SurveyList)
       })
       .catch(error => console.log(error))
   },
@@ -272,10 +272,10 @@ export default {
     let self = this;
     return new Promise((resolve, reject) => {
       commit('auth_request');
-      axios.post('/sell_survey/create', payload)
+      axios.post('/products/create', payload)
         .then(response => {
           console.log(response)
-          dispatch('getSellSurveyList');
+          dispatch('getProductList');
           resolve(response)
         })
         .catch(err => {
@@ -288,7 +288,7 @@ export default {
     let id = payload.id;
     return new Promise((resolve, reject) => {
       commit('auth_request');
-      axios.put('/sell_survey/'+id, payload)
+      axios.put('/products/'+id, payload)
         .then(response => {
           console.log(response)
           dispatch('getSellSurveyList');
