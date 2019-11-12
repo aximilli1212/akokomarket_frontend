@@ -97,7 +97,7 @@
               <td>{{ item.date_created }}</td>
               <td class="align-center">
                 <v-btn small color="grey darken-1" @click="editProduct(item)"><v-icon>mdi-pencil</v-icon>Edit</v-btn>
-<!--                <v-btn small color="red darken-1" @click="onDeleteProduct(item)"><v-icon>mdi-delete</v-icon>Delete</v-btn>-->
+                <v-btn small color="red darken-1" @click="onDeleteProduct(item)"><v-icon>mdi-delete</v-icon>Delete</v-btn>
               </td>
             </template>
           </v-data-table>
