@@ -25,9 +25,9 @@
               <v-form >
                 <v-text-field
                         box
-                  ref="username"
-                  v-model="username"
-                  :rules="[() => !!username || 'This field is required']"
+                  ref="email"
+                  v-model="email"
+                  :rules="[() => !!email || 'This field is required']"
                   prepend-inner-icon="mdi-account"
                   label="Email"
                   placeholder="Email"
@@ -60,19 +60,6 @@
                 @click="login">Login
               </v-btn>
             </v-card-actions>
-            <v-snackbar
-              v-model="snackbar"
-              :color="color"
-              :top='true'
-            >
-              {{ errorMessages }}
-              <v-btn
-                flat
-                @click="snackbar = false"
-              >
-                Close
-              </v-btn>
-            </v-snackbar>
           </v-card>
         </v-flex>
       </v-layout>
@@ -84,11 +71,8 @@
 export default {
   data: function () {
     return {
-      username: '',
+      email: '',
       password: '',
-      errorMessages: 'Incorrect login info',
-      snackbar: false,
-      color: 'general',
       showPassword: false
     }
   },
@@ -96,13 +80,14 @@ export default {
   // Sends action to Vuex that will log you in and redirect to the dash otherwise, error
   methods: {
     login: function () {
-      let username = this.username
+      let email = this.email
       let password = this.password
-      this.$store.dispatch('login', { username, password })
-        .then(() => this.$router.push('/dashboard'))
+      this.$store.dispatch('login', { email, password })
+        .then(() => {this.$router.push('/dashboard');
+          this.$store.commit('setSnack',{color:"success",status_msg:"Success", added_msg:`${email} Successfully logged In` })
+        })
         .catch(err => {
         console.log(err)
-        this.snackbar= true
         }
         )
     }
