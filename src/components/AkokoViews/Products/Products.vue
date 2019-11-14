@@ -96,7 +96,8 @@
               <td>{{ item.name }}</td>
               <td>{{ item.date_created }}</td>
               <td class="align-center">
-                <v-btn small color="grey darken-1" @click="editProduct(item)"><v-icon>mdi-pencil</v-icon>Edit</v-btn>
+                <v-btn round small color="brown darken-1" @click="viewCat(item)"><v-icon left>mdi-tag</v-icon>View Categories</v-btn>
+                <v-btn round small color="grey darken-1" @click="editProduct(item)"><v-icon left>mdi-pencil</v-icon>Edit</v-btn>
 <!--                <v-btn small color="red darken-1" @click="onDeleteProduct(item)"><v-icon>mdi-delete</v-icon>Delete</v-btn>-->
               </td>
             </template>
@@ -141,7 +142,10 @@
       this.$store.dispatch('getProductList');
     },
     methods:{
-      ...mapMutations(['setSnack']),
+      viewCat(item){
+        alert("tide")
+        this.$router.replace("icons")
+      },
       addProduct(){
         this.clear();
         this.addProductDialog = true;

@@ -185,6 +185,11 @@ export default {
         text: "Products",
         icon: "mdi-tag",
       },
+      {
+        to: "/dashboard/categories",
+        text: "Categories",
+        icon: "mdi-tag",
+      },
 
 
     ],
