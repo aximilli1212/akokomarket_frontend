@@ -143,8 +143,7 @@
     },
     methods:{
       viewCat(item){
-        alert("tide")
-        this.$router.replace("icons")
+        this.$router.replace("categories")
       },
       addProduct(){
         this.clear();
