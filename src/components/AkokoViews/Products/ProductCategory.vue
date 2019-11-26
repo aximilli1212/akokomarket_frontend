@@ -5,7 +5,7 @@
           grid-list-xl
   >
     <!--    ADD CUSTOMER DIALOG-->
-    <v-dialog v-model="addSurveyDialog" persistent max-width="600px">
+    <v-dialog v-model="addCategoriesDialog" persistent max-width="600px">
       <v-card>
         <v-toolbar >
           <v-toolbar-title class="primary--text">{{dialogTitle}}</v-toolbar-title>
@@ -23,60 +23,12 @@
             <v-container grid-list-md elevation-3>
               <v-layout wrap >
 
-                <v-flex xs6 sm6 md6>
+                <v-flex xs12 sm12 md12>
                   <v-text-field
 
                           label="Name"
-                          v-model="survey.name"
+                          v-model="categories.name"
                           prepend-inner-icon="mdi-account"
-                          box
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs6 sm6 md6>
-                  <v-text-field
-                          label="Phone"
-                          v-model="survey.phone"
-                          prepend-inner-icon="mdi-phone"
-                          box
-                  ></v-text-field>
-                </v-flex>
-
-                <v-flex xs6 sm6 md6>
-                  <v-text-field
-                          label="Location"
-                          v-model="survey.location"
-                          prepend-inner-icon="mdi-map-marker"
-                          box
-                  ></v-text-field>
-                </v-flex><v-flex xs6 sm6 md6>
-                <v-text-field
-                        label="Occupation"
-                        v-model="survey.occupation"
-                        prepend-inner-icon="mdi-briefcase"
-                        box
-                ></v-text-field>
-              </v-flex><v-flex xs4 sm4 md4>
-                <v-select
-                        label="Product"
-                        :items="products"
-                        v-model="survey.product"
-                        prepend-inner-icon="mdi-tag-outline"
-                        box
-                ></v-select>
-              </v-flex><v-flex xs4 sm4 md4>
-                <v-select
-                        label="Production Type"
-                        :items="production_types"
-                        v-model="survey.production_type"
-                        prepend-inner-icon="mdi-bookmark"
-                        box
-                ></v-select>
-              </v-flex>
-                <v-flex xs4 sm4 md4>
-                  <v-text-field
-                          label=" Capacity"
-                          v-model="survey.production_capacity"
-                          prepend-inner-icon="mdi-pound"
                           box
                   ></v-text-field>
                 </v-flex>
@@ -92,14 +44,14 @@
 
           <v-btn
                   v-if="!editIndex"
-                  @click="onSurveyAdd"
+                  @click="onCategoriesAdd"
                   color="grey"
                   :loading="loader"
                   :disabled="loader"
           ><v-icon left>mdi-library-plus</v-icon>{{btnTitle}}</v-btn>
           <v-btn
                   v-if="editIndex"
-                  @click="onSurveyEdit"
+                  @click="onCategoriesEdit"
                   color="grey"
                   :loading="loader"
                   :disabled="loader"
@@ -116,15 +68,15 @@
       <v-flex
               md12
       >
-        <v-btn class="grey darken-1" @click="addSellSurvey"><v-icon left>mdi-account-plus</v-icon> Add Sell Survey</v-btn>
+        <v-btn class="grey darken-1" @click="addCategories"><v-icon left>mdi-account-plus</v-icon> Add Categories</v-btn>
         <material-card
-                color="primary"
+                color="brown"
                 :title="title"
-                text="List of all sell surveys"
+                text="List of all categoriess"
         >
           <v-data-table
                   :headers="headers"
-                  :items="surveyList"
+                  :items="categoriesList"
                   color="black"
           >
             <template
@@ -142,14 +94,10 @@
             >
               <td>{{ item.id }}</td>
               <td>{{ item.name }}</td>
-              <td>{{ item.phone }}</td>
-              <td>{{ item.product }}</td>
-              <td>{{ item.occupation }}</td>
-              <td>{{ item.location }}</td>
               <td>{{ item.date_created }}</td>
               <td class="align-center">
-                <v-btn small color="grey darken-1" @click="editSurvey(item)"><v-icon>mdi-pencil</v-icon>Edit</v-btn>
-                <v-btn small color="red darken-1" @click="onDeleteSurvey(item)"><v-icon>mdi-delete</v-icon>Delete</v-btn>
+                <v-btn small color="grey darken-1" @click="editCategories(item)"><v-icon>mdi-pencil</v-icon>Edit</v-btn>
+                <!--                <v-btn small color="red darken-1" @click="onDeleteCategories(item)"><v-icon>mdi-delete</v-icon>Delete</v-btn>-->
               </td>
             </template>
           </v-data-table>
@@ -163,59 +111,58 @@
   import { mapMutations, mapGetters } from "vuex";
 
   export default {
-    name:'SellSurveys',
+    name:'ProductCategories',
     data: () => ({
-      dialogTitle:"Add New Survey",
-      btnTitle:"Add New Survey",
+      dialogTitle:"Add New Categories",
+      btnTitle:"Add New Categories",
       editIndex:0,
-      survey:{
+      categories:{
         name:'',
-        phone:'',
-        location:'',
-        product:'',
-        occupation:'',
-        production_type:'',
-        production_capacity:'',
       },
-      products:['Egg','Chicken'],
-      production_types:['Feed','Broilers'],
       valid:true,
-      addSurveyDialog:false,
+      addCategoriesDialog:false,
       loader:false,
       headers: [
         { text: 'ID', align: 'left', value: 'id',class:'subheading',sortable:false },
-        { text: 'Name', align: 'left', value: 'name',class:'subheading',sortable:false },
-        { text: 'Phone No.', align: 'left', value: 'phone',class:'subheading',sortable:false },
-        { text: 'Product', align: 'left', value: 'prouct',class:'subheading' },
-        { text: 'Occupation', align: 'left', value: 'occupation',class:'subheading' },
-        { text: 'Location', align: 'left', value: 'location',class:'subheading' },
-        { text: 'Time', align: 'left', value: 'date_created',class:'subheading' },
+        { text: 'Category Name', align: 'left', value: 'name',class:'subheading',sortable:false },
         { text: '', value: 'actions',class:'subheading' },
       ],
-      singleSurvey:{},
+      singleCategories:{},
     }),
     computed: {
       title(){
-        return "All Sell Surveys ("+this.surveyList.length+")";
+        return "All Categories ("+this.categoriesList.length+")";
       },
-      ...mapGetters(["surveyList","btn_loader"]),
+      ...mapGetters(["categoriesList","btn_loader"]),
     },
     mounted(){
-      this.$store.dispatch('getSellSurveyList');
+     this.getCat();
     },
     methods:{
       ...mapMutations(['setSnack']),
-      addSellSurvey(){
+      getCat(){
+        let self = this;
+        this.loader = true;
+        this.$store.dispatch('getCategoriesList').then(response =>{
+           self.loader = false;
+           console.log(response);
+        }).catch(err=>{
+          console.log(err);
+        });
+      },
+      addCategories(){
         this.clear();
-        this.addSurveyDialog = true;
+        this.addCategoriesDialog = true;
       },
-      onSurveyAdd(){
+      onCategoriesAdd(){
+       this.categories.product_id = this.$store.getters.activeProd.id;
         this.loader = true;
-        this.$store.dispatch('addSellSurvey',this.survey)
+        this.$store.dispatch('addCategories',this.categories)
                 .then(() => {
                   this.closeup();
+                  this.getCat();
                   this.loader = false;
-                  this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Sell Survey successfully inserted." })
+                  this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Categories successfully inserted." })
                 })
                 .catch(err => {
                           console.log(err)
@@ -226,13 +173,13 @@
                         }
                 )
       },
-      onSurveyEdit(){
+      onCategoriesEdit(){
         this.loader = true;
-        this.$store.dispatch('editSellSurvey',this.survey)
+        this.$store.dispatch('editCategories',this.categories)
                 .then(() => {
                   this.closeup();
                   this.loader = false;
-                  this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Sell Survey successfully inserted." })
+                  this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Categories successfully inserted." })
                 })
                 .catch(err => {
                           console.log(err)
@@ -243,50 +190,41 @@
                         }
                 )
       },
-      editSurvey(payload){
-        this.survey = payload;
-        this.dialogTitle = "Edit Survey";
-        this.btnTitle = "Edit Survey";
-        this.addSurveyDialog = true;
+      editCategories(payload){
+        this.categories = payload;
+        this.dialogTitle = "Edit Categories";
+        this.btnTitle = "Edit Categories";
+        this.addCategoriesDialog = true;
         this.editIndex = 1;
       },
-      onDeleteSurvey(payload){
+      onDeleteCategories(payload){
 
-        let go = confirm('Are you sure you want to delete this sell survey?')
+        let go = confirm('Are you sure you want to delete this sell categories?')
         if(go){
-          this.survey = payload;
+          this.categories = payload;
           this.loader = true;
-          this.$store.dispatch('deleteSellSurvey',this.survey)
+          this.$store.dispatch('deleteSellCategories',this.categories)
                   .then(() => {
                     this.closeup();
                     this.loader = false;
-                    this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Sell Survey successfully Deleted." })
+                    this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Categories successfully Deleted." })
                   })
                   .catch(err => {
                             console.log(err)
                             this.loader = false;
                             this.closeup();
                             this.$store.commit('setSnack',{color:"error",status_msg:"Error", added_msg:"Could not delete data." })
-
-                          }
-                  )
-        }
-
+                          })}
       },
       closeup(){
-        this.addSurveyDialog = false;
-        this.dialogTitle = "Add Survey";
-        this.btnTitle = "Add Survey";
+        this.addCategoriesDialog = false;
+        this.dialogTitle = "Add Categories";
+        this.btnTitle = "Add Categories";
       },
+
       clear(){
         this.editIndex = 0;
-        this.survey.name = '';
-        this.survey.location = '';
-        this.survey.phone = '';
-        this.survey.product = '';
-        this.survey.occupation = '';
-        this.survey.production_capacity = '';
-        this.survey.production_type = '';
+        this.categories.name = '';
       },
     }
   }

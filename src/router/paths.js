@@ -185,6 +185,14 @@ export default [
         component: () => import(`@/components/AkokoViews/Products/Products.vue`)
       },
       {
+        path: 'categories',
+        meta: {
+          name: 'Categories',
+          requiresAuth: true
+        },
+        component: () => import(`@/components/AkokoViews/Products/ProductCategory.vue`)
+      },
+      {
         path: 'user',
         meta: {
           name: 'User',

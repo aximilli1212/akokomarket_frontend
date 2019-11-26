@@ -10,19 +10,26 @@
         justify-center>
         <v-flex
           xs12
-          sm8
-          md4>
-          <v-card
-            class="elevation-12"
-          >
-            <v-toolbar dark
-              color="primary"
+          sm6
+          md2>
+            <v-card
+                    style="border-radius:20px"
+                    class="elevation-8 pt-8"
+                    height="600"
+                    width="400"
             >
-              <v-toolbar-title dark class="white--text text-align-center"><v-icon left>mdi-lock</v-icon> AKOKOMARKET LOGIN</v-toolbar-title>
-              <v-spacer/>
-            </v-toolbar>
-            <v-card-text class="px-5">
-              <v-form >
+                <v-img
+                        class="white--text align-center mx-auto"
+                        height="160px"
+                        width="120px"
+                        :src="require('../assets/img/chicken.jpg')"
+                >
+                </v-img>
+                <div class="align-center" style="text-align:center">
+                    <span class="grey--text text--darken-1 mr-4"><v-icon>mdi-copyright</v-icon>Enterprise Edition</span>
+                </div>
+                <v-card-text class="mx-15 mt-5">
+              <v-form class="mx-10">
                 <v-text-field
                         box
                   ref="email"
@@ -50,16 +57,19 @@
                 />
               </v-form>
             </v-card-text>
-            <v-divider class="mt-5"/>
-            <v-card-actions>
-              <v-spacer/>
-              <v-btn
-                align-center
-                justify-center
-                color="primary"
-                @click="login">Login
-              </v-btn>
-            </v-card-actions>
+                <v-card-actions class="mx-auto">
+                    <v-btn
+                            align-center
+                            justify-center
+                            color="primary"
+                            dark
+                            large
+                            round
+                            :loading="loader"
+                            class="px-12 mx-auto"
+                            @click="login"><v-icon left color="white">mdi-lock-open-variant</v-icon>Login
+                    </v-btn>
+                </v-card-actions>
           </v-card>
         </v-flex>
       </v-layout>
@@ -104,6 +114,6 @@ export default {
   .cbg{
     border:1px solid #e3e3e3;
     background: #e3e3e3;
-    background-image:url('../assets/img/akoko1.jpg');
+    /*background-image:url('../assets/img/akoko1.jpg');*/
   }
 </style>

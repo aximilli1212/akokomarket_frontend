@@ -21,5 +21,7 @@ export default {
   surveyList: [],
   depotList: [],
   transactionList: [],
+  categoriesList: [],
   requestList: [],
+  active_prod: {},
 }

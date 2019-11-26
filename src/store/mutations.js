@@ -53,5 +53,11 @@ export default {
   setProductList (state, productList) {
     state.productList = productList;
   },
+  setCategoriesList (state, catList) {
+    state.categoriesList = catList;
+  },
+  setProd (state, payload) {
+    state.active_prod = payload;
+  },
 
 }
