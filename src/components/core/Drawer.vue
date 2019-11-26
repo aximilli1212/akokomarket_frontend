@@ -117,6 +117,11 @@ export default {
         text: "Products",
         icon: "mdi-tag",
       },
+      {
+        to: "/dashboard/manage_users",
+        text: "Manage Users",
+        icon: "mdi-account",
+      },
     ],
     responsive: false
   }),

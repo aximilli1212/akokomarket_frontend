@@ -1,6 +1,7 @@
 // https://vuex.vuejs.org/en/actions.html
 import * as product from "./actionModules/products"
 import * as categories from "./actionModules/categories"
+import * as users from "./actionModules/users"
 import axios from 'axios'
 
 // The login action passes vuex commit helper that we will use to trigger mutations.
@@ -10,6 +11,7 @@ export default {
    editProduct:product.editProduct,
    getCategoriesList:categories.getCategoriesList,
    addCategories:categories.addCategories,
+   getUserList:users.getUserList,
   login ({ commit }, userData) {
     return new Promise((resolve, reject) => {
       axios.post('/admin/login', { email: userData.email, password: userData.password })
