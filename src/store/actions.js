@@ -1,8 +1,15 @@
 // https://vuex.vuejs.org/en/actions.html
+import * as product from "./actionModules/products"
+import * as categories from "./actionModules/categories"
 import axios from 'axios'
 
 // The login action passes vuex commit helper that we will use to trigger mutations.
 export default {
+   addProduct:product.addProduct,
+   getProductList:product.getProductList,
+   editProduct:product.editProduct,
+   getCategoriesList:categories.getCategoriesList,
+   addCategories:categories.addCategories,
   login ({ commit }, userData) {
     return new Promise((resolve, reject) => {
       axios.post('/admin/login', { email: userData.email, password: userData.password })
@@ -30,9 +37,9 @@ export default {
     })
   },
   logout ({ commit }) {
+     alert('we logging out')
     return new Promise((resolve, reject) => {
-      localStorage.removeItem('token')
-      delete axios.defaults.headers.common['Authorization']
+       localStorage.removeItem('token')
       resolve()
     })
   },
@@ -260,62 +267,6 @@ export default {
     })
   },
 
-  getProductList ({ commit }, tableName) {
-    axios.get('/products')
-      .then(response => {
-        let SurveyList = response.data.data;
-        console.log(SurveyList);
-        commit('setProductList', SurveyList)
-      })
-      .catch(error => console.log(error))
-  },
-  addProduct ({ commit, dispatch }, payload) {
-    let self = this;
-    return new Promise((resolve, reject) => {
-      commit('auth_request');
-      axios.post('/products/create', payload)
-        .then(response => {
-          console.log(response)
-          dispatch('getProductList');
-          resolve(response)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
-  },
-  editProduct({ commit, dispatch }, payload) {
-    let self = this;
-    let id = payload.id;
-    return new Promise((resolve, reject) => {
-      commit('auth_request');
-      axios.put('/products/'+id, payload)
-        .then(response => {
-          console.log(response)
-          dispatch('getProductList');
-          resolve(response)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
-  },
-
-  deleteProduct ({ commit, dispatch }, payload) {
-    let id = payload.id;
-    return new Promise((resolve, reject) => {
-      commit('auth_request');
-      axios.delete('/sell_survey/'+id)
-        .then(response => {
-          console.log(response)
-          dispatch('getSellSurveyList');
-          resolve(response)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
-  },
 
   // autoRefreshToken ({ commit }) {
   //   return new Promise((resolve, reject) => {

@@ -13,4 +13,6 @@ export default {
   depotList: state => state.depotList,
   btn_loader: state => state.btn_loader,
   snackSet: state => state.snackSet,
+  categoriesList: state => state.categoriesList,
+  activeProd: state => state.active_prod,
 };

@@ -60,51 +60,6 @@
             v-text="link.text"
           />
         </v-list-tile>
-<!--        <v-list-group-->
-<!--                prepend-icon="cart-arrow-down"-->
-<!--                value="true"-->
-<!--        >-->
-<!--          <template v-slot:activator>-->
-<!--            <v-list-item-title>Products</v-list-item-title>-->
-<!--          </template>-->
-<!--        <v-list-tile-->
-
-<!--          to="dash"-->
-<!--          active-class="grey"-->
-<!--          avatar-->
-<!--          class="v-list-item"-->
-<!--        >-->
-<!--          <v-list-tile-action>-->
-<!--            <v-icon>mdi-circle</v-icon>-->
-<!--          </v-list-tile-action>-->
-<!--          <v-list-tile-title>Eggs</v-list-tile-title>-->
-<!--        </v-list-tile>-->
-<!--          <v-list-tile-->
-
-<!--          to="dash"-->
-<!--          active-class="grey"-->
-<!--          avatar-->
-<!--          class="v-list-item"-->
-<!--        >-->
-<!--          <v-list-tile-action>-->
-<!--            <v-icon>mdi-map</v-icon>-->
-<!--          </v-list-tile-action>-->
-<!--          <v-list-tile-title>Chicken</v-list-tile-title>-->
-<!--        </v-list-tile>-->
-<!--          <v-list-tile-->
-
-<!--          to="dash"-->
-<!--          active-class="grey"-->
-<!--          avatar-->
-<!--          class="v-list-item"-->
-<!--        >-->
-<!--          <v-list-tile-action>-->
-<!--            <v-icon>mdi-leaf</v-icon>-->
-<!--          </v-list-tile-action>-->
-<!--          <v-list-tile-title>Maize</v-list-tile-title>-->
-<!--        </v-list-tile>-->
-<!--        </v-list-group>-->
-
       </v-layout>
     </v-img>
   </v-navigation-drawer>
@@ -126,29 +81,6 @@ export default {
         icon: 'mdi-view-dashboard',
         text: 'Dashboard'
       },
-      // {
-      //   to: '/dashboard/user-profile',
-      //   icon: 'mdi-account',
-      //   text: 'User Profile'
-      // },
-      //
-      // {
-      //   to: '/dashboard/typography',
-      //   icon: 'mdi-format-font',
-      //   text: 'Typography'
-      // },
-      //
-      // {
-      //   to: '/dashboard/icons',
-      //   icon: 'mdi-chart-bubble',
-      //   text: 'Icons'
-      // },
-      //
-      // {
-      //   to: '/dashboard/notifications',
-      //   icon: 'mdi-bell',
-      //   text: 'Notifications'
-      // },
 
       {
         to: "/dashboard/requests",
@@ -185,13 +117,6 @@ export default {
         text: "Products",
         icon: "mdi-tag",
       },
-      {
-        to: "/dashboard/categories",
-        text: "Categories",
-        icon: "mdi-tag",
-      },
-
-
     ],
     responsive: false
   }),

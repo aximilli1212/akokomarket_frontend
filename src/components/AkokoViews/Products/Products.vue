@@ -143,7 +143,8 @@
     },
     methods:{
       viewCat(item){
-        this.$router.replace("categories")
+        this.$store.commit("setProd",item);
+        this.$router.push("product_category");
       },
       addProduct(){
         this.clear();

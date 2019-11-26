@@ -5,7 +5,7 @@
           grid-list-xl
   >
     <!--    ADD CUSTOMER DIALOG-->
-    <v-dialog v-model="addProductDialog" persistent max-width="600px">
+    <v-dialog v-model="addCategoriesDialog" persistent max-width="600px">
       <v-card>
         <v-toolbar >
           <v-toolbar-title class="primary--text">{{dialogTitle}}</v-toolbar-title>
@@ -27,7 +27,7 @@
                   <v-text-field
 
                           label="Name"
-                          v-model="product.name"
+                          v-model="categories.name"
                           prepend-inner-icon="mdi-account"
                           box
                   ></v-text-field>
@@ -44,14 +44,14 @@
 
           <v-btn
                   v-if="!editIndex"
-                  @click="onProductAdd"
+                  @click="onCategoriesAdd"
                   color="grey"
                   :loading="loader"
                   :disabled="loader"
           ><v-icon left>mdi-library-plus</v-icon>{{btnTitle}}</v-btn>
           <v-btn
                   v-if="editIndex"
-                  @click="onProductEdit"
+                  @click="onCategoriesEdit"
                   color="grey"
                   :loading="loader"
                   :disabled="loader"
@@ -68,15 +68,15 @@
       <v-flex
               md12
       >
-        <v-btn class="grey darken-1" @click="addProduct"><v-icon left>mdi-account-plus</v-icon> Add Product</v-btn>
+        <v-btn class="grey darken-1" @click="addCategories"><v-icon left>mdi-account-plus</v-icon> Add Categories</v-btn>
         <material-card
-                color="primary"
+                color="brown"
                 :title="title"
-                text="List of all products"
+                text="List of all categoriess"
         >
           <v-data-table
                   :headers="headers"
-                  :items="productList"
+                  :items="categoriesList"
                   color="black"
           >
             <template
@@ -96,8 +96,8 @@
               <td>{{ item.name }}</td>
               <td>{{ item.date_created }}</td>
               <td class="align-center">
-                <v-btn small color="grey darken-1" @click="editProduct(item)"><v-icon>mdi-pencil</v-icon>Edit</v-btn>
-                <!--                <v-btn small color="red darken-1" @click="onDeleteProduct(item)"><v-icon>mdi-delete</v-icon>Delete</v-btn>-->
+                <v-btn small color="grey darken-1" @click="editCategories(item)"><v-icon>mdi-pencil</v-icon>Edit</v-btn>
+                <!--                <v-btn small color="red darken-1" @click="onDeleteCategories(item)"><v-icon>mdi-delete</v-icon>Delete</v-btn>-->
               </td>
             </template>
           </v-data-table>
@@ -111,48 +111,58 @@
   import { mapMutations, mapGetters } from "vuex";
 
   export default {
-    name:'Products',
+    name:'ProductCategories',
     data: () => ({
-      dialogTitle:"Add New Product",
-      btnTitle:"Add New Product",
+      dialogTitle:"Add New Categories",
+      btnTitle:"Add New Categories",
       editIndex:0,
-      product:{
+      categories:{
         name:'',
       },
-      products:['Egg','Chicken'],
-      production_types:['Feed','Broilers'],
       valid:true,
-      addProductDialog:false,
+      addCategoriesDialog:false,
       loader:false,
       headers: [
         { text: 'ID', align: 'left', value: 'id',class:'subheading',sortable:false },
         { text: 'Category Name', align: 'left', value: 'name',class:'subheading',sortable:false },
         { text: '', value: 'actions',class:'subheading' },
       ],
-      singleProduct:{},
+      singleCategories:{},
     }),
     computed: {
       title(){
-        return "All Products ("+this.productList.length+")";
+        return "All Categories ("+this.categoriesList.length+")";
       },
-      ...mapGetters(["productList","btn_loader"]),
+      ...mapGetters(["categoriesList","btn_loader"]),
     },
     mounted(){
-      this.$store.dispatch('getProductList');
+     this.getCat();
     },
     methods:{
       ...mapMutations(['setSnack']),
-      addProduct(){
+      getCat(){
+        let self = this;
+        this.loader = true;
+        this.$store.dispatch('getCategoriesList').then(response =>{
+           self.loader = false;
+           console.log(response);
+        }).catch(err=>{
+          console.log(err);
+        });
+      },
+      addCategories(){
         this.clear();
-        this.addProductDialog = true;
+        this.addCategoriesDialog = true;
       },
-      onProductAdd(){
+      onCategoriesAdd(){
+       this.categories.product_id = this.$store.getters.activeProd.id;
         this.loader = true;
-        this.$store.dispatch('addProduct',this.product)
+        this.$store.dispatch('addCategories',this.categories)
                 .then(() => {
                   this.closeup();
+                  this.getCat();
                   this.loader = false;
-                  this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Product successfully inserted." })
+                  this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Categories successfully inserted." })
                 })
                 .catch(err => {
                           console.log(err)
@@ -163,13 +173,13 @@
                         }
                 )
       },
-      onProductEdit(){
+      onCategoriesEdit(){
         this.loader = true;
-        this.$store.dispatch('editProduct',this.product)
+        this.$store.dispatch('editCategories',this.categories)
                 .then(() => {
                   this.closeup();
                   this.loader = false;
-                  this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Product successfully inserted." })
+                  this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Categories successfully inserted." })
                 })
                 .catch(err => {
                           console.log(err)
@@ -180,44 +190,41 @@
                         }
                 )
       },
-      editProduct(payload){
-        this.product = payload;
-        this.dialogTitle = "Edit Product";
-        this.btnTitle = "Edit Product";
-        this.addProductDialog = true;
+      editCategories(payload){
+        this.categories = payload;
+        this.dialogTitle = "Edit Categories";
+        this.btnTitle = "Edit Categories";
+        this.addCategoriesDialog = true;
         this.editIndex = 1;
       },
-      onDeleteProduct(payload){
+      onDeleteCategories(payload){
 
-        let go = confirm('Are you sure you want to delete this sell product?')
+        let go = confirm('Are you sure you want to delete this sell categories?')
         if(go){
-          this.product = payload;
+          this.categories = payload;
           this.loader = true;
-          this.$store.dispatch('deleteSellProduct',this.product)
+          this.$store.dispatch('deleteSellCategories',this.categories)
                   .then(() => {
                     this.closeup();
                     this.loader = false;
-                    this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Product successfully Deleted." })
+                    this.$store.commit('setSnack',{color:"green",status_msg:"Success", added_msg:"Categories successfully Deleted." })
                   })
                   .catch(err => {
                             console.log(err)
                             this.loader = false;
                             this.closeup();
                             this.$store.commit('setSnack',{color:"error",status_msg:"Error", added_msg:"Could not delete data." })
-
-                          }
-                  )
-        }
-
+                          })}
       },
       closeup(){
-        this.addProductDialog = false;
-        this.dialogTitle = "Add Product";
-        this.btnTitle = "Add Product";
+        this.addCategoriesDialog = false;
+        this.dialogTitle = "Add Categories";
+        this.btnTitle = "Add Categories";
       },
+
       clear(){
         this.editIndex = 0;
-        this.product.name = '';
+        this.categories.name = '';
       },
     }
   }
