@@ -199,6 +199,13 @@ export default [
           requiresAuth: true
         },
         component: () => import(`@/components/AkokoViews/User.vue`)
+      }, {
+        path: 'manage_users',
+        meta: {
+          name: 'ManageUsers',
+          requiresAuth: true
+        },
+        component: () => import(`@/components/AkokoViews/Users/Users.vue`)
       },
     ]
   }

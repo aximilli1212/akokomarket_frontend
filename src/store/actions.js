@@ -10,6 +10,8 @@ export default {
    editProduct:product.editProduct,
    getCategoriesList:categories.getCategoriesList,
    addCategories:categories.addCategories,
+   getUserList:users.getUserList,
+   addUser:users.addUser,
   login ({ commit }, userData) {
     return new Promise((resolve, reject) => {
       axios.post('/admin/login', { email: userData.email, password: userData.password })

@@ -23,5 +23,6 @@ export default {
   transactionList: [],
   categoriesList: [],
   requestList: [],
+  userList: [],
   active_prod: {},
 }
