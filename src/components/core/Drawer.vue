@@ -27,7 +27,7 @@
               width="74"
             />
           </v-list-tile-avatar>
-          <v-list-tile-title class="title warning--text">
+          <v-list-tile-title class="title primary--text">
            AKOKOMARKET
           </v-list-tile-title>
         </v-list-tile>
@@ -38,9 +38,9 @@
           v-if="responsive"
         >
           <v-text-field
-            class="purple-input search-input"
-            label="Search..."
-            color="purple"
+            class=" search-input"
+            label="Search Akokomarket"
+            color="primary"
           />
         </v-list-tile>
 
@@ -49,7 +49,7 @@
           v-for="(link, i) in links"
           :key="i"
           :to="link.to"
-          :active-class="color"
+          active-class="green darken-3 white--text font-weight-bold"
           avatar
           class="v-list-item"
         >
