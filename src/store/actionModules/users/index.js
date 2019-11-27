@@ -14,6 +14,19 @@ const getUserList =  ({ state,commit }, payload) => {
       })
   })
 }
+const addUser =  ({ state,commit }, payload) => {
+  return new Promise((resolve, reject) => {
+    axios.post(`/admin/register`, payload)
+      .then(response => {
+        let catList = response.data;
+        resolve(catList)
+      })
+      .catch(error => {
+         resolve(error);
+        console.log(error)
+      })
+  })
+}
 
 const editUser = ({ commit, dispatch }, payload)=> {
   let self = this;
@@ -48,5 +61,5 @@ const deleteUser =  ({ commit, dispatch }, payload)=> {
   })
 }
 
-export {getUserList,editUser,deleteUser}
+export {getUserList,editUser,deleteUser,addUser}
 
