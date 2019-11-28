@@ -120,7 +120,51 @@ import {
 export default {
   data: () => ({
     logo: require('@/assets/img/redditicon.png'),
-    links: [
+    admin_links: [
+      {
+        to: '/',
+        icon: 'mdi-view-dashboard',
+        text: 'Dashboard'
+      },
+      {
+        to: "/dashboard/requests",
+        text: "Market Requests",
+        icon: "mdi-cart",
+      },
+      {
+        to: "/dashboard/customers",
+        text: "Customers",
+        icon: "mdi-account-multiple",
+      },
+      {
+        to: "/dashboard/company",
+        text: "Company",
+        icon: "mdi-domain",
+      },
+      {
+        to: "/dashboard/depot",
+        text: "Depot",
+        icon: "mdi-home",
+      },
+      {
+        to: "/dashboard/transactions",
+        text: "Transactions",
+        icon: "mdi-cash",
+      },
+      {
+        to: "/dashboard/sell_survey",
+        text: "Sell Survey",
+        icon: "mdi-chart-bar-stacked",
+      },
+      {
+        to: "/dashboard/products",
+        text: "Products",
+        icon: "mdi-tag",
+      },
+
+
+    ],
+    agent_links: [
       {
         to: '/',
         icon: 'mdi-view-dashboard',
@@ -178,6 +222,16 @@ export default {
     },
     items () {
       return this.$t('Layout.View.items')
+    },
+    links(){
+      let user = JSON.parse(localStorage.getItem('user'));
+      let account = this.$store.getters.userData.account_type;
+      if(account === 'admin' || user.account_type === 'admin'){
+          return this.admin_links;
+      }
+      if(account === 'agent' || user.account_type === 'agent' ){
+         return this.agent_links;
+      }
     }
   },
   mounted () {
