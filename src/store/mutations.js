@@ -59,5 +59,8 @@ export default {
   setProd (state, payload) {
     state.active_prod = payload;
   },
+  setUserList (state, payload) {
+    state.userList = payload;
+  },
 
 }
