@@ -18,7 +18,7 @@ export default {
       axios.post('/admin/login', { email: userData.email, password: userData.password })
         .then(response => {
           const token = response.data.data.access_token
-          const user = response.data.data.user
+          const user = response.data.data.user;
 
           console.log(token);
           console.log(user);
@@ -40,7 +40,6 @@ export default {
     })
   },
   logout ({ commit }) {
-     alert('we logging out')
     return new Promise((resolve, reject) => {
        localStorage.removeItem('token')
       resolve()
