@@ -43,8 +43,6 @@
             color="primary"
           />
         </v-list-tile>
-
-
         <v-list-tile
           v-for="(link, i) in links"
           :key="i"
