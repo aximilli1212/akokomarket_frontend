@@ -26,7 +26,7 @@
                     slot-scope="{ header }"
             >
               <span
-                      class="subheading font-weight-light text-warning text--darken-3"
+                      class="subheading font-weight-bold primary--text"
                       v-text="header.text">
               </span>
 

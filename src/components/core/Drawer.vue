@@ -126,16 +126,16 @@ export default {
         icon: 'mdi-view-dashboard',
         text: 'Dashboard'
       },
-      {
-        to: "/dashboard/requests",
-        text: "Market Requests",
-        icon: "mdi-cart",
-      },
-      {
-        to: "/dashboard/customers",
-        text: "Customers",
-        icon: "mdi-account-multiple",
-      },
+      // {
+      //   to: "/dashboard/requests",
+      //   text: "Market Requests",
+      //   icon: "mdi-cart",
+      // },
+      // {
+      //   to: "/dashboard/customers",
+      //   text: "Customers",
+      //   icon: "mdi-account-multiple",
+      // },
       {
         to: "/dashboard/company",
         text: "Company",
@@ -146,16 +146,16 @@ export default {
         text: "Depot",
         icon: "mdi-home",
       },
-      {
-        to: "/dashboard/transactions",
-        text: "Transactions",
-        icon: "mdi-cash",
-      },
-      {
-        to: "/dashboard/sell_survey",
-        text: "Sell Survey",
-        icon: "mdi-chart-bar-stacked",
-      },
+      // {
+      //   to: "/dashboard/transactions",
+      //   text: "Transactions",
+      //   icon: "mdi-cash",
+      // },
+      // {
+      //   to: "/dashboard/sell_survey",
+      //   text: "Sell Survey",
+      //   icon: "mdi-chart-bar-stacked",
+      // },
       {
         to: "/dashboard/products",
         text: "Products",
