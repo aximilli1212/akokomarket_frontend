@@ -1,7 +1,6 @@
 // https://vuex.vuejs.org/en/actions.html
 import * as product from "./actionModules/products"
 import * as categories from "./actionModules/categories"
-import * as users from "./actionModules/users"
 import axios from 'axios'
 
 // The login action passes vuex commit helper that we will use to trigger mutations.
@@ -11,8 +10,6 @@ export default {
    editProduct:product.editProduct,
    getCategoriesList:categories.getCategoriesList,
    addCategories:categories.addCategories,
-   getUserList:users.getUserList,
-   addUser:users.addUser,
   login ({ commit }, userData) {
     return new Promise((resolve, reject) => {
       axios.post('/admin/login', { email: userData.email, password: userData.password })
@@ -20,12 +17,9 @@ export default {
           const token = response.data.data.access_token
           const user = response.data.data.user
 
-          console.log(token);
-          console.log(user);
-          console.log(response);
           // storing jwt in localStorage. https cookie is safer place to store
           localStorage.setItem('token', token)
-          localStorage.setItem('user', user)
+          localStorage.setItem('user', JSON.stringify(user));
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
           // mutation to change state properties to the values passed along
           commit('auth_success', { token, user })
@@ -34,7 +28,8 @@ export default {
         .catch(err => {
           console.log('login error')
           commit('auth_error')
-          localStorage.removeItem('token')
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
           reject(err)
         })
     })

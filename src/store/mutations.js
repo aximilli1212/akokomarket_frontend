@@ -62,5 +62,4 @@ export default {
   setUserList (state, payload) {
     state.userList = payload;
   },
-
 }
