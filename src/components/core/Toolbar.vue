@@ -45,10 +45,9 @@
 <!--				<router-link v-ripple class="toolbar-items" to="/dashboard/user-profile">-->
 <!--					<v-icon color>mdi-account</v-icon>-->
 <!--				</router-link>-->
-
-				<router-link v-ripple class="toolbar-items" to="/login">
-					<v-icon class="toolbar-items">mdi-power</v-icon>
-				</router-link>
+               <v-btn icon @click="logout" color="red--text">
+				   <v-icon class="toolbar-items">mdi-power</v-icon>
+			   </v-btn>
 
 
 			</v-flex>
@@ -108,9 +107,11 @@
 					this.responsiveInput = true;
 				}
 			},
-			logout: function() {
-				let self = this;
-				self.$router.push("login");
+			logout() {
+				alert('we logging out');
+				this.$store.commit('logout');
+				localStorage.removeItem('token')
+				this.$router.push("/");
 
 				// this.$store.dispatch("logout").then(() => {
 				// 	alert('looo')

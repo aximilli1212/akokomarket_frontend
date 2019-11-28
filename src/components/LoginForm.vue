@@ -83,20 +83,26 @@ export default {
     return {
       email: '',
       password: '',
-      showPassword: false
+      showPassword: false,
+      loader:false,
     }
   },
 
   // Sends action to Vuex that will log you in and redirect to the dash otherwise, error
   methods: {
     login: function () {
+      this.loader = true;
       let email = this.email
       let password = this.password
       this.$store.dispatch('login', { email, password })
-        .then(() => {this.$router.push('/dashboard');
+        .then(() => {
+          this.loader = false;
+          this.$router.push('/dashboard');
+
           this.$store.commit('setSnack',{color:"success",status_msg:"Success", added_msg:`${email} Successfully logged In` })
         })
         .catch(err => {
+          this.loader = false;
         console.log(err)
         }
         )
