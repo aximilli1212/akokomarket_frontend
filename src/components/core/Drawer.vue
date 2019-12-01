@@ -17,19 +17,12 @@
         tag="v-list"
         column
       >
-        <v-list-tile avatar>
-          <v-list-tile-avatar
-            color="grey"
-          >
+        <v-list-tile class="ma-4" @click="$router.push('/')">
             <v-img
-              :src="require('../../assets/img/chicken.jpg')"
-              height="60"
-              width="74"
+              :src="require('../../assets/img/akoko_market_logo.png')"
+              height="50"
+              width="24"
             />
-          </v-list-tile-avatar>
-          <v-list-tile-title class="title primary--text">
-           AKOKOMARKET
-          </v-list-tile-title>
         </v-list-tile>
         <v-divider/>
 
@@ -161,8 +154,11 @@ export default {
         text: "Products",
         icon: "mdi-tag",
       },
-
-
+      {
+        to: "/dashboard/manage_users",
+        text: "Manage Users",
+        icon: "mdi-account",
+      },
     ],
     agent_links: [
       {
@@ -180,11 +176,11 @@ export default {
         text: "Customers",
         icon: "mdi-account-multiple",
       },
-      {
-        to: "/dashboard/company",
-        text: "Company",
-        icon: "mdi-domain",
-      },
+      // {
+      //   to: "/dashboard/company",
+      //   text: "Company",
+      //   icon: "mdi-domain",
+      // },
       {
         to: "/dashboard/depot",
         text: "Depot",
@@ -201,7 +197,7 @@ export default {
         icon: "mdi-chart-bar-stacked",
       },
       {
-        to: "/dashboard/products",
+        to: "/dashboard/agent/products",
         text: "Products",
         icon: "mdi-tag",
       },
