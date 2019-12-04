@@ -1,0 +1,15 @@
+Index: src/components/core/Toolbar.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/components/core/Toolbar.vue	(date 1574975225000)
++++ src/components/core/Toolbar.vue	(date 1574975323432)
+@@ -112,6 +112,7 @@
+ 				this.$store.commit('logout');
+ 				localStorage.removeItem('token')
+ 				this.$router.push("/");
++				// this.$router.push("/");
+ 
+ 				// this.$store.dispatch("logout").then(() => {
+ 				// 	alert('looo')

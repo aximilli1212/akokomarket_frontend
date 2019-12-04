@@ -9,6 +9,7 @@ export default {
   userList: state => state.userList,
   companyList: state => state.companyList,
   productList: state => state.productList,
+  agentProductList: state => state.agentProductList,
   requestList: state => state.requestList,
   surveyList: state => state.surveyList,
   transactionList: state => state.transactionList,

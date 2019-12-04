@@ -1,5 +1,5 @@
-// https://vuex.vuejs.org/en/actions.html
 import * as product from "./actionModules/products"
+import * as agentProduct from "./actionModules/agentProducts"
 import * as categories from "./actionModules/categories"
 import * as users from "./actionModules/users"
 import axios from 'axios'
@@ -9,6 +9,9 @@ export default {
    addProduct:product.addProduct,
    getProductList:product.getProductList,
    editProduct:product.editProduct,
+   addAgentProduct:agentProduct.addAgentProduct,
+   getAgentProductList:agentProduct.getAgentProductList,
+   editAgentProduct:agentProduct.editAgentProduct,
    getCategoriesList:categories.getCategoriesList,
    addCategories:categories.addCategories,
    getUserList:users.getUserList,

@@ -15,7 +15,7 @@
             <v-card
                     style="border-radius:20px"
                     class="elevation-8 pt-8"
-                    height="450"
+                    height="480"
                     width="400"
             >
                 <v-spacer class="py-3"></v-spacer>
@@ -30,7 +30,7 @@
                     <span class="grey--text caption text--darken-1 mr-0"><v-icon small>mdi-copyright</v-icon>Enterprise Edition</span>
                 </div>
                 <v-card-text class="mx-15 mt-5">
-              <v-form class="mx-10">
+              <v-form class="mx-10 px-4">
                 <v-text-field
                         box
                   ref="email"

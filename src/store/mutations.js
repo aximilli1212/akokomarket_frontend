@@ -49,6 +49,9 @@ export default {
   setSurveyList (state, surveyList) {
     state.surveyList = surveyList;
   },
+  setAgentProductList (state, productList) {
+    state.agentProductList = productList;
+  },
   setProductList (state, productList) {
     state.productList = productList;
   },

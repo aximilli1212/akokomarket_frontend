@@ -207,6 +207,19 @@ export default [
         },
         component: () => import(`@/components/AkokoViews/Users/Users.vue`)
       },
+
+
+      //All Agent Routes
+
+      {
+        path: 'agent/products',
+        meta: {
+          name: 'Products',
+          requiresAuth: true
+        },
+        component: () => import(`@/components/AgentViews/Products/Products.vue`)
+      },
+
     ]
   }
 ]
