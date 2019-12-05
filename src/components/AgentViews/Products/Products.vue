@@ -220,9 +220,6 @@
       this.$store.dispatch('getAgentProductList',{cid:this.cid});
     },
     methods:{
-      test(){
-        this.$store.dispatch('getAgentProductList',{cid:this.cid} );
-      },
       addProduct(){
         this.clear();
         this.addProductDialog = true;
