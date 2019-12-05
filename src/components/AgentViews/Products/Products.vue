@@ -190,7 +190,6 @@
       production_types:['Feed','Broilers'],
       valid:true,
       addProductDialog:false,
-      loader:false,
       headers: [
         { text: 'ID', align: 'left', value: 'id',class:'subheading',sortable:false },
         { text: 'Name', align: 'left', value: 'product_name',class:'subheading',sortable:false },
