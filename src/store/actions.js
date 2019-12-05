@@ -22,12 +22,9 @@ export default {
         .then(response => {
           const token = response.data.data.access_token
           const user = response.data.data.user;
-          console.log({userAkoko:user});
-
           // storing jwt in localStorage. https cookie is safer place to store
           localStorage.setItem('token', token)
           localStorage.setItem('cid', user.company_id);
-          alert(user.company_id);
           localStorage.setItem('user', JSON.stringify(user));
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
           // mutation to change state properties to the values passed along
