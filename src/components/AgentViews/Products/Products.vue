@@ -115,6 +115,7 @@
                 text="List of all products"
         >
           <v-data-table
+                  :loading="loader"
                   :headers="headers"
                   :items="agentProductList"
                   color="black"
@@ -161,6 +162,7 @@
       dialogTitle:"Add New Product",
       btnTitle:"Add New Product",
       editIndex:0,
+      loader:true,
       product:{
         name:'',
         type:'',
