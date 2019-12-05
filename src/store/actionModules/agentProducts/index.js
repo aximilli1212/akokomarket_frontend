@@ -14,10 +14,10 @@ const getAgentProductList =  ({ commit }, payload)=> {
             type: obj[i].product.name,
             price: obj[i].price,
             quantity: obj[i].quantity,
-            pack_: obj[i].quantity,
-            category: obj[i].category.name,
-            categorySet: obj[i].category,
-            productSet: obj[i].product,
+            pack_unit: obj[i].quantity,
+            category_name: obj[i].category.name,
+            category: obj[i].category,
+            product: obj[i].product,
             date_created: obj[i].date_created,
           })
         }

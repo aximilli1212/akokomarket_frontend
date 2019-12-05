@@ -33,9 +33,10 @@
                   <v-select
                           item-text="name"
                           item-value="id"
+                          return-object
                           filled
                           clearable
-                          :items="agentProductList"
+                          :items="productList"
                           label="Product Type"
                           v-model="product.type"
                           prepend-inner-icon="mdi-map"
@@ -136,7 +137,7 @@
               <td>{{ item.id }}</td>
               <td>{{ item.product_name }}</td>
               <td>{{ item.type }}</td>
-              <td>{{ item.category }}</td>
+              <td>{{ item.category_name }}</td>
               <td>{{ item.price }}</td>
 <!--              <td>{{ item.pack }}</td>-->
               <td>{{ item.date_created }}</td>
@@ -162,7 +163,7 @@
       dialogTitle:"Add New Product",
       btnTitle:"Add New Product",
       editIndex:0,
-      loader:true,
+      loader:false,
       product:{
         name:'',
         type:'',
@@ -194,7 +195,7 @@
         { text: 'ID', align: 'left', value: 'id',class:'subheading',sortable:false },
         { text: 'Name', align: 'left', value: 'product_name',class:'subheading',sortable:false },
         { text: 'Product Type', align: 'left', value: 'type',class:'subheading',sortable:false },
-        { text: 'Category', align: 'left', value: 'category',class:'subheading',sortable:false },
+        { text: 'Category', align: 'left', value: 'category_name',class:'subheading',sortable:false },
         { text: 'Price (GHS)', align: 'left', value: 'price',class:'subheading',sortable:false },
         // { text: 'Pack Units', align: 'left', value: 'unit',class:'subheading',sortable:false },
         { text: 'Date Added', align: 'left', value: 'date_created',class:'subheading',sortable:false },
@@ -207,13 +208,15 @@
       title(){
         return "All Products ("+this.agentProductList.length+")";
       },
-      ...mapGetters(["agentProductList","btn_loader","categoriesList"]),
+      ...mapGetters(["agentProductList","productList","btn_loader","categoriesList"]),
     },
     watch:{
 
     },
     mounted(){
       this.$store.dispatch('getAgentProductList',{cid:this.cid});
+      this.$store.dispatch('getCategoriesList');
+      this.$store.dispatch('getProductList');
     },
     methods:{
       addProduct(){
@@ -256,6 +259,8 @@
       },
       editProduct(payload){
         this.product = payload;
+        this.product.category = payload.categorySet;
+        this.product.product = payload.productSet;
         this.dialogTitle = "Edit Product";
         this.btnTitle = "Edit Product";
         this.addProductDialog = true;
