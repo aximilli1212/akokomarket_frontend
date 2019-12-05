@@ -7,16 +7,14 @@
     <!--    ADD CUSTOMER DIALOG-->
     <v-dialog v-model="addProductDialog" persistent max-width="600px">
       <v-card>
-        <v-toolbar >
+        <v-toolbar>
           <v-toolbar-title class="primary--text">{{dialogTitle}}</v-toolbar-title>
           <v-spacer></v-spacer>
-
 
           <v-btn icon @click.native="closeup">
             <v-icon color="grey darken-1">mdi-close</v-icon>
           </v-btn>
         </v-toolbar>
-
 
         <v-card-text>
           <v-form flat ref="form" v-model="valid" lazy-validation>
@@ -64,15 +62,15 @@
                           box
                   ></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm12 md12>
-                  <v-select
-                          :items="pack_units"
-                          label="Pack Units"
-                          v-model="product.pack"
-                          prepend-inner-icon="mdi-account"
-                          box
-                  ></v-select>
-                </v-flex>
+<!--                <v-flex xs12 sm12 md12>-->
+<!--                  <v-select-->
+<!--                          :items="pack_units"-->
+<!--                          label="Pack Units"-->
+<!--                          v-model="product.pack"-->
+<!--                          prepend-inner-icon="mdi-account"-->
+<!--                          box-->
+<!--                  ></v-select>-->
+<!--                </v-flex>-->
               </v-layout>
             </v-container>
           </v-form>
@@ -135,12 +133,12 @@
                     slot-scope="{ item }"
             >
               <td>{{ item.id }}</td>
-              <td>{{ item.name }}</td>
+              <td>{{ item.product_name }}</td>
               <td>{{ item.type }}</td>
               <td>{{ item.category }}</td>
               <td>{{ item.price }}</td>
-              <td>{{ item.pack }}</td>
-              <td>{{ item.date }}</td>
+<!--              <td>{{ item.pack }}</td>-->
+              <td>{{ item.date_created }}</td>
 
               <td class="align-center">
                 <v-btn round small color="grey darken-1" @click="editProduct(item)"><v-icon left>mdi-pencil</v-icon>Edit</v-btn>
@@ -193,12 +191,12 @@
       loader:false,
       headers: [
         { text: 'ID', align: 'left', value: 'id',class:'subheading',sortable:false },
-        { text: 'Name', align: 'left', value: 'name',class:'subheading',sortable:false },
+        { text: 'Name', align: 'left', value: 'product_name',class:'subheading',sortable:false },
         { text: 'Product Type', align: 'left', value: 'type',class:'subheading',sortable:false },
         { text: 'Category', align: 'left', value: 'category',class:'subheading',sortable:false },
         { text: 'Price (GHS)', align: 'left', value: 'price',class:'subheading',sortable:false },
-        { text: 'Pack Units', align: 'left', value: 'unit',class:'subheading',sortable:false },
-        { text: 'Date Added', align: 'left', value: 'date',class:'subheading',sortable:false },
+        // { text: 'Pack Units', align: 'left', value: 'unit',class:'subheading',sortable:false },
+        { text: 'Date Added', align: 'left', value: 'date_created',class:'subheading',sortable:false },
         { text: '', value: 'actions',class:'subheading' },
       ],
       singleProduct:{},

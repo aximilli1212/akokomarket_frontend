@@ -3,10 +3,26 @@ import axios from 'axios'
 const getAgentProductList =  ({ commit }, payload)=> {
   axios.get(`/agent_product/agent/${payload.cid}`)
     .then(response => {
-      console.log({cavity:response})
-      let agentProductList = response.data;
-      console.log(agentProductList);
-      commit('setAgentProductList', agentProductList);
+      let obj = response.data;
+      let pList = [];
+        for(let i = 0, len = obj.length; i < len ; i++){
+        pList.push({
+          id:obj[i].id,
+          product_name: obj[i].product_name,
+          product_id: obj[i].product_id,
+          type: obj[i].product.name,
+          price: obj[i].price,
+          quantity: obj[i].quantity,
+          pack_: obj[i].quantity,
+          category: obj[i].category.name,
+          categorySet: obj[i].category,
+          productSet: obj[i].product,
+          date_created: obj[i].date_created,
+        })
+      }
+
+      console.log({ListData:pList});
+      commit('setAgentProductList', pList);
     })
     .catch(error => console.log(error))
 }
