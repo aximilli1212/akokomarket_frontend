@@ -11,7 +11,7 @@ const getAgentProductList =  ({ commit }, payload)=> {
             id:obj[i].id,
             product_name: obj[i].product_name,
             product_id: obj[i].product_id,
-            type: obj[i].product.name,
+            type_name: obj[i].product.name,
             price: obj[i].price,
             quantity: obj[i].quantity,
             pack_unit: obj[i].quantity,

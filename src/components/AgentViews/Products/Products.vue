@@ -38,7 +38,7 @@
                           clearable
                           :items="productList"
                           label="Product Type"
-                          v-model="product.type"
+                          v-model="product.product"
                           prepend-inner-icon="mdi-map"
                           box
                   ></v-select>
@@ -137,7 +137,7 @@
             >
               <td>{{ item.id }}</td>
               <td>{{ item.product_name }}</td>
-              <td>{{ item.type }}</td>
+              <td>{{ item.type_name }}</td>
               <td>{{ item.category_name }}</td>
               <td>{{ item.price }}</td>
               <td>{{ item.quantity }}</td>
@@ -168,29 +168,18 @@
       loader:false,
       product:{
         name:'',
-        type:'',
-        category:'',
+        type_name:'',
+        category:{},
         price:'',
+        product:'',
         pack:'',
         date:'',
+        type:{},
       },
       pack_units:[
               'Crate',
               '15 set carton',
       ],
-      productData:[
-        {
-          id:1,
-          name:"P5 Eggs",
-          type:"Eggs",
-          category:"Pullet",
-          price:"35",
-          pack:"Crates",
-          date:"23rd January, 2019",
-        },
-      ],
-      products:['Egg','Chicken'],
-      production_types:['Feed','Broilers'],
       valid:true,
       addProductDialog:false,
       headers: [
@@ -224,13 +213,12 @@
     },
     mounted(){
       this.$store.dispatch('getAgentProductList',{cid:this.cid});
-      this.$store.dispatch('getCategoriesList');
       this.$store.dispatch('getProductList');
     },
     methods:{
       viewCat(item){
-        alert(item.id)
         this.$store.commit("setProd",item);
+        this.$store.dispatch('getCategoriesList');
       },
       addProduct(){
         this.clear();
