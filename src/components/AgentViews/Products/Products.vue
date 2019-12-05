@@ -48,6 +48,7 @@
                           item-value="id"
                           filled
                           clearable
+                          return-object
                           :items="categoriesList"
                           label="Category"
                           v-model="product.category"
@@ -139,6 +140,7 @@
               <td>{{ item.type }}</td>
               <td>{{ item.category_name }}</td>
               <td>{{ item.price }}</td>
+              <td>{{ item.quantity }}</td>
 <!--              <td>{{ item.pack }}</td>-->
               <td>{{ item.date_created }}</td>
 
@@ -197,6 +199,7 @@
         { text: 'Product Type', align: 'left', value: 'type',class:'subheading',sortable:false },
         { text: 'Category', align: 'left', value: 'category_name',class:'subheading',sortable:false },
         { text: 'Price (GHS)', align: 'left', value: 'price',class:'subheading',sortable:false },
+        { text: 'Quantity', align: 'left', value: 'quantity',class:'subheading',sortable:false },
         // { text: 'Pack Units', align: 'left', value: 'unit',class:'subheading',sortable:false },
         { text: 'Date Added', align: 'left', value: 'date_created',class:'subheading',sortable:false },
         { text: '', value: 'actions',class:'subheading' },
@@ -208,10 +211,16 @@
       title(){
         return "All Products ("+this.agentProductList.length+")";
       },
+      prodId(){
+        return this.product.type;
+      },
       ...mapGetters(["agentProductList","productList","btn_loader","categoriesList"]),
     },
     watch:{
-
+      prodId(val){
+        console.log(val);
+        this.viewCat({id:val.id});
+      }
     },
     mounted(){
       this.$store.dispatch('getAgentProductList',{cid:this.cid});
@@ -219,13 +228,26 @@
       this.$store.dispatch('getProductList');
     },
     methods:{
+      viewCat(item){
+        alert(item.id)
+        this.$store.commit("setProd",item);
+      },
       addProduct(){
         this.clear();
         this.addProductDialog = true;
       },
       onProductAdd(){
         this.loader = true;
-        this.$store.dispatch('addAgentProduct',this.product)
+        let agentProduct = {
+          product_name: this.product.product_name,
+          product_id: this.product.product.id,
+          category_id: this.product.category.id,
+          price: this.product.price,
+          quantity: this.product.quantity,
+          company_id: this.cid,
+        }
+
+        this.$store.dispatch('addAgentProduct',agentProduct)
                 .then(() => {
                   this.closeup();
                   this.loader = false;
