@@ -42,6 +42,15 @@ Vue.use(Vuetify, {
 Vue.use(VeeValidate);
 
 
+Vue.mixin({
+  computed: {
+    userData () {
+      return this.$store.getters.userData;
+    },
+  },
+});
+
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

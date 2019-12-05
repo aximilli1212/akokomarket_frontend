@@ -110,6 +110,7 @@
               md12
       >
         <v-btn class="grey darken-1" @click="addProduct"><v-icon left>mdi-account-plus</v-icon> Add Product</v-btn>
+
         <material-card
                 color="primary"
                 :title="title"
@@ -117,7 +118,7 @@
         >
           <v-data-table
                   :headers="headers"
-                  :items="productData"
+                  :items="agentProductList"
                   color="black"
           >
             <template
@@ -157,7 +158,7 @@
   import { mapMutations, mapGetters } from "vuex";
 
   export default {
-    name:'Agent Products',
+    name:'AgentProducts',
     data: () => ({
       dialogTitle:"Add New Product",
       btnTitle:"Add New Product",
@@ -182,23 +183,6 @@
           category:"Pullet",
           price:"35",
           pack:"Crates",
-          date:"23rd January, 2019",
-        },
-        {
-          id:2,
-          name:"Jumbo Eggs",
-          type:"Eggs",
-          category:"Extra Large",
-          price:"45",
-          pack:"Crates",
-          date:"23rd January, 2019",
-        }, {
-          id:3,
-          name:"Eron Eggs",
-          type:"Eggs",
-          category:"Large",
-          price:"38",
-          pack:"15 Set Carton",
           date:"23rd January, 2019",
         },
       ],
@@ -235,9 +219,12 @@
       }
     },
     mounted(){
-      this.$store.dispatch('getAgentProductList');
+      this.$store.dispatch('getAgentProductList',{cid:this.userData.company_id});
     },
     methods:{
+      test(){
+        this.$store.dispatch('getAgentProductList',{cid:this.userData.company_id} );
+      },
       addProduct(){
         this.clear();
         this.addProductDialog = true;
