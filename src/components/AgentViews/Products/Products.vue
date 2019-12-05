@@ -206,15 +206,10 @@
       title(){
         return "All Products ("+this.agentProductList.length+")";
       },
-      prodId(){
-        return this.product.type;
-      },
       ...mapGetters(["agentProductList","btn_loader","categoriesList"]),
     },
     watch:{
-      prodId(val){
-        this.viewCat({id:val});
-      }
+
     },
     mounted(){
       this.$store.dispatch('getAgentProductList',{cid:this.cid});
