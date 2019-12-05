@@ -108,10 +108,15 @@
 				}
 			},
 			logout() {
-				alert('we logging out');
-				this.$store.commit('logout');
-				localStorage.removeItem('token')
-				this.$router.push("/");
+				let con = confirm("Are you sure you want to logout?");
+				if(con){
+					this.$store.commit('logout');
+					localStorage.removeItem('token')
+					this.$router.push("/");
+				}
+
+				// this.$router.push("/");
+
 
 				// this.$store.dispatch("logout").then(() => {
 				// 	alert('looo')

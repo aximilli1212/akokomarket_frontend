@@ -87,7 +87,7 @@
               slot-scope="{ header }"
             >
               <span
-                class="font-weight-bold primary--text text--darken-3"
+                class="font-weight-bold primary--text"
                 v-text="header.text"
               />
             </template>

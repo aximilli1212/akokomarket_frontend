@@ -15,21 +15,22 @@
             <v-card
                     style="border-radius:20px"
                     class="elevation-8 pt-8"
-                    height="600"
+                    height="480"
                     width="400"
             >
+                <v-spacer class="py-3"></v-spacer>
                 <v-img
                         class="white--text align-center mx-auto"
-                        height="160px"
-                        width="120px"
-                        :src="require('../assets/img/chicken.jpg')"
+                        height="55px"
+                        width="180px"
+                        :src="require('../assets/img/akoko_market_logo.png')"
                 >
                 </v-img>
-                <div class="align-center" style="text-align:center">
-                    <span class="grey--text text--darken-1 mr-4"><v-icon>mdi-copyright</v-icon>Enterprise Edition</span>
+                <div class="align-center mt-4" style="text-align:center">
+                    <span class="grey--text caption text--darken-1 mr-0"><v-icon small>mdi-copyright</v-icon>Enterprise Edition</span>
                 </div>
                 <v-card-text class="mx-15 mt-5">
-              <v-form class="mx-10">
+              <v-form class="mx-10 px-4">
                 <v-text-field
                         box
                   ref="email"
@@ -95,7 +96,7 @@ export default {
       let email = this.email
       let password = this.password
       this.$store.dispatch('login', { email, password })
-        .then(() => {
+        .then((response) => {
           this.loader = false;
           this.$router.push('/dashboard');
 

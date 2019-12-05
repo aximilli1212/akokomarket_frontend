@@ -1,5 +1,5 @@
-// https://vuex.vuejs.org/en/actions.html
 import * as product from "./actionModules/products"
+import * as agentProduct from "./actionModules/agentProducts"
 import * as categories from "./actionModules/categories"
 import * as users from "./actionModules/users"
 import axios from 'axios'
@@ -9,6 +9,9 @@ export default {
    addProduct:product.addProduct,
    getProductList:product.getProductList,
    editProduct:product.editProduct,
+   addAgentProduct:agentProduct.addAgentProduct,
+   getAgentProductList:agentProduct.getAgentProductList,
+   editAgentProduct:agentProduct.editAgentProduct,
    getCategoriesList:categories.getCategoriesList,
    addCategories:categories.addCategories,
    getUserList:users.getUserList,
@@ -20,12 +23,9 @@ export default {
           const token = response.data.data.access_token
           const user = response.data.data.user;
 
-          console.log(token);
-          console.log(user);
-          console.log(response);
           // storing jwt in localStorage. https cookie is safer place to store
           localStorage.setItem('token', token)
-          localStorage.setItem('user', user)
+          localStorage.setItem('user', JSON.stringify(user));
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
           // mutation to change state properties to the values passed along
           commit('auth_success', { token, user })
@@ -34,7 +34,8 @@ export default {
         .catch(err => {
           console.log('login error')
           commit('auth_error')
-          localStorage.removeItem('token')
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
           reject(err)
         })
     })

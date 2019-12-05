@@ -31,6 +31,47 @@
                           prepend-inner-icon="mdi-account"
                           box
                   ></v-text-field>
+                </v-flex> <v-flex xs12 sm12 md12>
+                  <v-select
+                          item-text="name"
+                          item-value="id"
+                          filled
+                          clearable
+                          :items="agentProductList"
+                          label="Product Type"
+                          v-model="product.type"
+                          prepend-inner-icon="mdi-map"
+                          box
+                  ></v-select>
+                </v-flex> <v-flex xs12 sm12 md12>
+                  <v-select
+                          item-text="name"
+                          item-value="id"
+                          filled
+                          clearable
+                          :items="categoriesList"
+                          label="Category"
+                          v-model="product.category"
+                          prepend-inner-icon="mdi-at"
+                          box
+                  ></v-select>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                  <v-text-field
+                          label="Price(GHS)"
+                          v-model="product.price"
+                          prepend-inner-icon="mdi-cash-multiple"
+                          box
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                  <v-select
+                          :items="pack_units"
+                          label="Pack Units"
+                          v-model="product.pack"
+                          prepend-inner-icon="mdi-account"
+                          box
+                  ></v-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -76,7 +117,7 @@
         >
           <v-data-table
                   :headers="headers"
-                  :items="productList"
+                  :items="productData"
                   color="black"
           >
             <template
@@ -94,9 +135,13 @@
             >
               <td>{{ item.id }}</td>
               <td>{{ item.name }}</td>
-              <td>{{ item.date_created }}</td>
+              <td>{{ item.type }}</td>
+              <td>{{ item.category }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.pack }}</td>
+              <td>{{ item.date }}</td>
+
               <td class="align-center">
-                <v-btn round small color="brown darken-1" @click="viewCat(item)"><v-icon left>mdi-tag</v-icon>View Categories</v-btn>
                 <v-btn round small color="grey darken-1" @click="editProduct(item)"><v-icon left>mdi-pencil</v-icon>Edit</v-btn>
 <!--                <v-btn small color="red darken-1" @click="onDeleteProduct(item)"><v-icon>mdi-delete</v-icon>Delete</v-btn>-->
               </td>
@@ -112,14 +157,51 @@
   import { mapMutations, mapGetters } from "vuex";
 
   export default {
-    name:'Products',
+    name:'Agent Products',
     data: () => ({
       dialogTitle:"Add New Product",
       btnTitle:"Add New Product",
       editIndex:0,
       product:{
         name:'',
+        type:'',
+        category:'',
+        price:'',
+        pack:'',
+        date:'',
       },
+      pack_units:[
+              'Crate',
+              '15 set carton',
+      ],
+      productData:[
+        {
+          id:1,
+          name:"P5 Eggs",
+          type:"Eggs",
+          category:"Pullet",
+          price:"35",
+          pack:"Crates",
+          date:"23rd January, 2019",
+        },
+        {
+          id:2,
+          name:"Jumbo Eggs",
+          type:"Eggs",
+          category:"Extra Large",
+          price:"45",
+          pack:"Crates",
+          date:"23rd January, 2019",
+        }, {
+          id:3,
+          name:"Eron Eggs",
+          type:"Eggs",
+          category:"Large",
+          price:"38",
+          pack:"15 Set Carton",
+          date:"23rd January, 2019",
+        },
+      ],
       products:['Egg','Chicken'],
       production_types:['Feed','Broilers'],
       valid:true,
@@ -128,31 +210,41 @@
       headers: [
         { text: 'ID', align: 'left', value: 'id',class:'subheading',sortable:false },
         { text: 'Name', align: 'left', value: 'name',class:'subheading',sortable:false },
+        { text: 'Product Type', align: 'left', value: 'type',class:'subheading',sortable:false },
+        { text: 'Category', align: 'left', value: 'category',class:'subheading',sortable:false },
+        { text: 'Price (GHS)', align: 'left', value: 'price',class:'subheading',sortable:false },
+        { text: 'Pack Units', align: 'left', value: 'unit',class:'subheading',sortable:false },
+        { text: 'Date Added', align: 'left', value: 'date',class:'subheading',sortable:false },
         { text: '', value: 'actions',class:'subheading' },
       ],
       singleProduct:{},
     }),
+
     computed: {
       title(){
-        return "All Products ("+this.productList.length+")";
+        return "All Products ("+this.agentProductList.length+")";
       },
-      ...mapGetters(["productList","btn_loader"]),
+      prodId(){
+        return this.product.type;
+      },
+      ...mapGetters(["agentProductList","btn_loader","categoriesList"]),
+    },
+    watch:{
+      prodId(val){
+        this.viewCat({id:val});
+      }
     },
     mounted(){
-      this.$store.dispatch('getProductList');
+      this.$store.dispatch('getAgentProductList');
     },
     methods:{
-      viewCat(item){
-        this.$store.commit("setProd",item);
-        this.$router.push("product_category");
-      },
       addProduct(){
         this.clear();
         this.addProductDialog = true;
       },
       onProductAdd(){
         this.loader = true;
-        this.$store.dispatch('addProduct',this.product)
+        this.$store.dispatch('addAgentProduct',this.product)
                 .then(() => {
                   this.closeup();
                   this.loader = false;

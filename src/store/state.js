@@ -18,6 +18,7 @@ export default {
   customerList: [],
   companyList: [],
   productList: [],
+  agentProductList: [],
   surveyList: [],
   depotList: [],
   transactionList: [],
