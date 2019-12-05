@@ -47,6 +47,9 @@ Vue.mixin({
     userData () {
       return this.$store.getters.userData;
     },
+    cid (){
+      return localStorage.getItem('cid');
+    },
   },
 });
 
