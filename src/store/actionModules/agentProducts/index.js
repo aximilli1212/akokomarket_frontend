@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 const getAgentProductList =  ({ commit }, payload)=> {
-  axios.get(`/agent_product/agent/${payload.id}`)
+  axios.get(`/agent_product/agent/${payload.cid}`)
     .then(response => {
-      let SurveyList = response.data.data;
-      console.log(SurveyList);
-      commit('setAgentProductList', SurveyList)
+      console.log({cavity:response})
+      let agentProductList = response.data;
+      console.log(agentProductList);
+      commit('setAgentProductList', agentProductList);
     })
     .catch(error => console.log(error))
 }
