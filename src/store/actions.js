@@ -1,19 +1,31 @@
-// https://vuex.vuejs.org/en/actions.html
+import * as product from "./actionModules/products"
+import * as agentProduct from "./actionModules/agentProducts"
+import * as categories from "./actionModules/categories"
+import * as users from "./actionModules/users"
 import axios from 'axios'
 
 // The login action passes vuex commit helper that we will use to trigger mutations.
 export default {
+   addProduct:product.addProduct,
+   getProductList:product.getProductList,
+   editProduct:product.editProduct,
+   addAgentProduct:agentProduct.addAgentProduct,
+   getAgentProductList:agentProduct.getAgentProductList,
+   editAgentProduct:agentProduct.editAgentProduct,
+   getCategoriesList:categories.getCategoriesList,
+   addCategories:categories.addCategories,
+   getUserList:users.getUserList,
+   addUser:users.addUser,
   login ({ commit }, userData) {
     return new Promise((resolve, reject) => {
-      commit('auth_request')
-      axios.post('/login', { email: userData.username, password: userData.password })
+      axios.post('/admin/login', { email: userData.email, password: userData.password })
         .then(response => {
-          const token = response.data.access_token
-          const user = response.data.username
-          console.log(response);
+          const token = response.data.data.access_token
+          const user = response.data.data.user;
           // storing jwt in localStorage. https cookie is safer place to store
           localStorage.setItem('token', token)
-          localStorage.setItem('user', user)
+          localStorage.setItem('cid', user.company_id);
+          localStorage.setItem('user', JSON.stringify(user));
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
           // mutation to change state properties to the values passed along
           commit('auth_success', { token, user })
@@ -22,16 +34,15 @@ export default {
         .catch(err => {
           console.log('login error')
           commit('auth_error')
-          localStorage.removeItem('token')
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
           reject(err)
         })
     })
   },
   logout ({ commit }) {
     return new Promise((resolve, reject) => {
-      commit('logout')
-      localStorage.removeItem('token')
-      delete axios.defaults.headers.common['Authorization']
+       localStorage.removeItem('token')
       resolve()
     })
   },
@@ -259,61 +270,6 @@ export default {
     })
   },
 
-  getProductList ({ commit }, tableName) {
-    axios.get('sell_survey')
-      .then(response => {
-        let SurveyList = response.data.data;
-        console.log(SurveyList);
-        commit('setSurveyList', SurveyList)
-      })
-      .catch(error => console.log(error))
-  },
-  addProduct ({ commit, dispatch }, payload) {
-    let self = this;
-    return new Promise((resolve, reject) => {
-      commit('auth_request');
-      axios.post('/sell_survey/create', payload)
-        .then(response => {
-          console.log(response)
-          dispatch('getSellSurveyList');
-          resolve(response)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
-  },
-  editProduct({ commit, dispatch }, payload) {
-    let self = this;
-    let id = payload.id;
-    return new Promise((resolve, reject) => {
-      commit('auth_request');
-      axios.put('/sell_survey/'+id, payload)
-        .then(response => {
-          console.log(response)
-          dispatch('getSellSurveyList');
-          resolve(response)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
-  },
-  deleteProduct ({ commit, dispatch }, payload) {
-    let id = payload.id;
-    return new Promise((resolve, reject) => {
-      commit('auth_request');
-      axios.delete('/sell_survey/'+id)
-        .then(response => {
-          console.log(response)
-          dispatch('getSellSurveyList');
-          resolve(response)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
-  },
 
   // autoRefreshToken ({ commit }) {
   //   return new Promise((resolve, reject) => {

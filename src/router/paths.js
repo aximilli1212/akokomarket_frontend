@@ -27,7 +27,7 @@ export default [
     // redirect if already signed in
     beforeEnter: (to, from, next) => {
       if (store.getters.authorized) {
-        next('/dashbaord')
+        next('/dashboard')
       } else {
         next()
       }
@@ -185,13 +185,41 @@ export default [
         component: () => import(`@/components/AkokoViews/Products/Products.vue`)
       },
       {
+        path: 'categories',
+        meta: {
+          name: 'Categories',
+          requiresAuth: true
+        },
+        component: () => import(`@/components/AkokoViews/Products/ProductCategory.vue`)
+      },
+      {
         path: 'user',
         meta: {
           name: 'User',
           requiresAuth: true
         },
         component: () => import(`@/components/AkokoViews/User.vue`)
+      }, {
+        path: 'manage_users',
+        meta: {
+          name: 'ManageUsers',
+          requiresAuth: true
+        },
+        component: () => import(`@/components/AkokoViews/Users/Users.vue`)
       },
+
+
+      //All Agent Routes
+
+      {
+        path: 'agent/products',
+        meta: {
+          name: 'Products',
+          requiresAuth: true
+        },
+        component: () => import(`@/components/AgentViews/Products/Products.vue`)
+      },
+
     ]
   }
 ]

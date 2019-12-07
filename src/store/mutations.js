@@ -4,7 +4,6 @@ export default {
   auth_request (state) {
     state.authStatus = 'loading'
   },
-
   auth_success (state, { token, user }) {
     state.authStatus = 'success'
     state.token = token
@@ -50,8 +49,19 @@ export default {
   setSurveyList (state, surveyList) {
     state.surveyList = surveyList;
   },
+  setAgentProductList (state, productList) {
+    state.agentProductList = productList;
+  },
   setProductList (state, productList) {
     state.productList = productList;
   },
-
+  setCategoriesList (state, catList) {
+    state.categoriesList = catList;
+  },
+  setProd (state, payload) {
+    state.active_prod = payload;
+  },
+  setUserList (state, payload) {
+    state.userList = payload;
+  },
 }

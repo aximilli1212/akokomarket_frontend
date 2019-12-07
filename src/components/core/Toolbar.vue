@@ -22,31 +22,34 @@
 				<router-link v-ripple class="toolbar-items" to="/">
 					<v-icon color>mdi-home</v-icon>
 				</router-link>
-				<v-menu bottom left content-class offset-y transition="slide-y-transition">
-					<router-link
-						v-ripple
-						slot="activator"
-						class="toolbar-items"
-						to="/dashboard/notifications"
-					>
-						<v-badge color="error" overlap>
-							<template slot="badge">{{ notifications.length }}</template>
-							<v-icon color>mdi-bell</v-icon>
-						</v-badge>
-					</router-link>
-					<v-card>
-						<v-list dense>
-							<v-list-tile v-for="notification in notifications" :key="notification" @click="onClick">
-								<v-list-tile-title v-text="notification"/>
-							</v-list-tile>
-						</v-list>
-					</v-card>
-				</v-menu>
-				<router-link v-ripple class="toolbar-items" to="/dashboard/user-profile">
-					<v-icon color>mdi-account</v-icon>
-				</router-link>
+<!--				<v-menu bottom left content-class offset-y transition="slide-y-transition">-->
+<!--					<router-link-->
+<!--						v-ripple-->
+<!--						slot="activator"-->
+<!--						class="toolbar-items"-->
+<!--						to="/dashboard/notifications"-->
+<!--					>-->
+<!--						<v-badge color="error" overlap>-->
+<!--							<template slot="badge">{{ notifications.length }}</template>-->
+<!--							<v-icon color>mdi-bell</v-icon>-->
+<!--						</v-badge>-->
+<!--					</router-link>-->
+<!--					<v-card>-->
+<!--						<v-list dense>-->
+<!--							<v-list-tile v-for="notification in notifications" :key="notification" @click="onClick">-->
+<!--								<v-list-tile-title v-text="notification"/>-->
+<!--							</v-list-tile>-->
+<!--						</v-list>-->
+<!--					</v-card>-->
+<!--				</v-menu>-->
+<!--				<router-link v-ripple class="toolbar-items" to="/dashboard/user-profile">-->
+<!--					<v-icon color>mdi-account</v-icon>-->
+<!--				</router-link>-->
+               <v-btn icon @click="logout" color="red--text">
+				   <v-icon class="toolbar-items">mdi-power</v-icon>
+			   </v-btn>
 
-				<v-icon class="toolbar-items" color @click="logout">mdi-power</v-icon>
+
 			</v-flex>
 		</v-toolbar-items>
 	</v-toolbar>
@@ -104,10 +107,21 @@
 					this.responsiveInput = true;
 				}
 			},
-			logout: function() {
-				this.$store.dispatch("logout").then(() => {
-					this.$router.push("");
-				});
+			logout() {
+				let con = confirm("Are you sure you want to logout?");
+				if(con){
+					this.$store.commit('logout');
+					localStorage.removeItem('token')
+					this.$router.push("/");
+				}
+
+				// this.$router.push("/");
+
+
+				// this.$store.dispatch("logout").then(() => {
+				// 	alert('looo')
+				// 	self.$router.push("login");
+				// }).catch(err=>console.log(err));
 			}
 		}
 	};

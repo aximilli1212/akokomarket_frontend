@@ -6,91 +6,6 @@
   >
     <v-layout wrap>
       <v-flex
-        md12
-        sm12
-        lg4
-      >
-        <material-chart-card
-          :data="dailySalesChart.data"
-          :options="dailySalesChart.options"
-          color="warning"
-          type="Line"
-        >
-          <h4 class="title font-weight-light">Daily StackOverflow Visits</h4>
-          <p class="category d-inline-flex font-weight-light">
-            <v-icon
-              color="green"
-              small
-            >
-              mdi-arrow-up
-            </v-icon>
-            <span class="green--text">55%</span>&nbsp;
-            increase in today's visits
-          </p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey-lighten-1--text font-weight-light">updated 4 minutes ago</span>
-          </template>
-        </material-chart-card>
-      </v-flex>
-      <v-flex
-        md12
-        sm12
-        lg4
-      >
-        <material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
-          color="red"
-          type="Bar"
-        >
-          <h4 class="title font-weight-light">Emails telling you your code sucks</h4>
-          <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption blue-grey--text font-weight-light">updated 10 minutes ago</span>
-          </template>
-        </material-chart-card>
-      </v-flex>
-      <v-flex
-        md12
-        sm12
-        lg4
-      >
-        <material-chart-card
-          :data="dataCompletedTasksChart.data"
-          :options="dataCompletedTasksChart.options"
-          color="indigo"
-          type="Line"
-        >
-          <h3 class="title font-weight-light">Completed Tasks</h3>
-          <p class="category d-inline-flex font-weight-light">Last Last Campaign Performance</p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">campaign sent 26 minutes ago</span>
-          </template>
-        </material-chart-card>
-      </v-flex>
-      <v-flex
         sm6
         xs12
         md6
@@ -172,7 +87,7 @@
               slot-scope="{ header }"
             >
               <span
-                class="font-weight-light text-warning text--darken-3"
+                class="font-weight-bold primary--text"
                 v-text="header.text"
               />
             </template>

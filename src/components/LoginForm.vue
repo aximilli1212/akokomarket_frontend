@@ -10,24 +10,32 @@
         justify-center>
         <v-flex
           xs12
-          sm8
-          md4>
-          <v-card
-            class="elevation-12"
-          >
-            <v-toolbar dark
-              color="primary"
+          sm6
+          md2>
+            <v-card
+                    style="border-radius:20px"
+                    class="elevation-8 pt-8"
+                    height="480"
+                    width="400"
             >
-              <v-toolbar-title dark class="white--text text-align-center"><v-icon left>mdi-lock</v-icon> AKOKOMARKET LOGIN</v-toolbar-title>
-              <v-spacer/>
-            </v-toolbar>
-            <v-card-text class="px-5">
-              <v-form >
+                <v-spacer class="py-3"></v-spacer>
+                <v-img
+                        class="white--text align-center mx-auto"
+                        height="55px"
+                        width="180px"
+                        :src="require('../assets/img/akoko_market_logo.png')"
+                >
+                </v-img>
+                <div class="align-center mt-4" style="text-align:center">
+                    <span class="grey--text caption text--darken-1 mr-0"><v-icon small>mdi-copyright</v-icon>Enterprise Edition</span>
+                </div>
+                <v-card-text class="mx-15 mt-5">
+              <v-form class="mx-10 px-4">
                 <v-text-field
                         box
-                  ref="username"
-                  v-model="username"
-                  :rules="[() => !!username || 'This field is required']"
+                  ref="email"
+                  v-model="email"
+                  :rules="[() => !!email || 'This field is required']"
                   prepend-inner-icon="mdi-account"
                   label="Email"
                   placeholder="Email"
@@ -50,29 +58,19 @@
                 />
               </v-form>
             </v-card-text>
-            <v-divider class="mt-5"/>
-            <v-card-actions>
-              <v-spacer/>
-              <v-btn
-                align-center
-                justify-center
-                color="primary"
-                @click="login">Login
-              </v-btn>
-            </v-card-actions>
-            <v-snackbar
-              v-model="snackbar"
-              :color="color"
-              :top='true'
-            >
-              {{ errorMessages }}
-              <v-btn
-                flat
-                @click="snackbar = false"
-              >
-                Close
-              </v-btn>
-            </v-snackbar>
+                <v-card-actions class="mx-auto">
+                    <v-btn
+                            align-center
+                            justify-center
+                            color="primary"
+                            dark
+                            large
+                            round
+                            :loading="loader"
+                            class="px-12 mx-auto"
+                            @click="login"><v-icon left color="white">mdi-lock-open-variant</v-icon>Login
+                    </v-btn>
+                </v-card-actions>
           </v-card>
         </v-flex>
       </v-layout>
@@ -84,25 +82,29 @@
 export default {
   data: function () {
     return {
-      username: '',
+      email: '',
       password: '',
-      errorMessages: 'Incorrect login info',
-      snackbar: false,
-      color: 'general',
-      showPassword: false
+      showPassword: false,
+      loader:false,
     }
   },
 
   // Sends action to Vuex that will log you in and redirect to the dash otherwise, error
   methods: {
     login: function () {
-      let username = this.username
+      this.loader = true;
+      let email = this.email
       let password = this.password
-      this.$store.dispatch('login', { username, password })
-        .then(() => this.$router.push('/dashboard'))
+      this.$store.dispatch('login', { email, password })
+        .then((response) => {
+          this.loader = false;
+          this.$router.push('/dashboard');
+
+          this.$store.commit('setSnack',{color:"success",status_msg:"Success", added_msg:`${email} Successfully logged In` })
+        })
         .catch(err => {
+          this.loader = false;
         console.log(err)
-        this.snackbar= true
         }
         )
     }
@@ -119,6 +121,6 @@ export default {
   .cbg{
     border:1px solid #e3e3e3;
     background: #e3e3e3;
-    background-image:url('../assets/img/akoko1.jpg');
+    /*background-image:url('../assets/img/akoko1.jpg');*/
   }
 </style>

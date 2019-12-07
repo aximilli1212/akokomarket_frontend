@@ -7,16 +7,14 @@
     <!--    ADD CUSTOMER DIALOG-->
     <v-dialog v-model="addProductDialog" persistent max-width="600px">
       <v-card>
-        <v-toolbar >
+        <v-toolbar>
           <v-toolbar-title class="primary--text">{{dialogTitle}}</v-toolbar-title>
           <v-spacer></v-spacer>
-
 
           <v-btn icon @click.native="closeup">
             <v-icon color="grey darken-1">mdi-close</v-icon>
           </v-btn>
         </v-toolbar>
-
 
         <v-card-text>
           <v-form flat ref="form" v-model="valid" lazy-validation>
@@ -31,7 +29,50 @@
                           prepend-inner-icon="mdi-account"
                           box
                   ></v-text-field>
+                </v-flex> <v-flex xs12 sm12 md12>
+                  <v-select
+                          item-text="name"
+                          item-value="id"
+                          return-object
+                          filled
+                          clearable
+                          :items="productList"
+                          label="Product Type"
+                          v-model="product.product"
+                          prepend-inner-icon="mdi-map"
+                          box
+                  ></v-select>
+                </v-flex> <v-flex xs12 sm12 md12>
+                  <v-select
+                          item-text="name"
+                          item-value="id"
+                          filled
+                          clearable
+                          return-object
+                          :items="categoriesList"
+                          label="Category"
+                          v-model="product.category"
+                          prepend-inner-icon="mdi-at"
+                          box
+                  ></v-select>
                 </v-flex>
+                <v-flex xs12 sm12 md12>
+                  <v-text-field
+                          label="Price(GHS)"
+                          v-model="product.price"
+                          prepend-inner-icon="mdi-cash-multiple"
+                          box
+                  ></v-text-field>
+                </v-flex>
+<!--                <v-flex xs12 sm12 md12>-->
+<!--                  <v-select-->
+<!--                          :items="pack_units"-->
+<!--                          label="Pack Units"-->
+<!--                          v-model="product.pack"-->
+<!--                          prepend-inner-icon="mdi-account"-->
+<!--                          box-->
+<!--                  ></v-select>-->
+<!--                </v-flex>-->
               </v-layout>
             </v-container>
           </v-form>
@@ -69,14 +110,16 @@
               md12
       >
         <v-btn class="grey darken-1" @click="addProduct"><v-icon left>mdi-account-plus</v-icon> Add Product</v-btn>
+
         <material-card
                 color="primary"
                 :title="title"
                 text="List of all products"
         >
           <v-data-table
+                  :loading="loader"
                   :headers="headers"
-                  :items="productList"
+                  :items="agentProductList"
                   color="black"
           >
             <template
@@ -93,10 +136,15 @@
                     slot-scope="{ item }"
             >
               <td>{{ item.id }}</td>
-              <td>{{ item.name }}</td>
+              <td>{{ item.product_name }}</td>
+              <td>{{ item.type_name }}</td>
+              <td>{{ item.category_name }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.quantity }}</td>
+<!--              <td>{{ item.pack }}</td>-->
               <td>{{ item.date_created }}</td>
+
               <td class="align-center">
-                <v-btn round small color="brown darken-1" @click="viewCat(item)"><v-icon left>mdi-tag</v-icon>View Categories</v-btn>
                 <v-btn round small color="grey darken-1" @click="editProduct(item)"><v-icon left>mdi-pencil</v-icon>Edit</v-btn>
 <!--                <v-btn small color="red darken-1" @click="onDeleteProduct(item)"><v-icon>mdi-delete</v-icon>Delete</v-btn>-->
               </td>
@@ -112,39 +160,65 @@
   import { mapMutations, mapGetters } from "vuex";
 
   export default {
-    name:'Products',
+    name:'AgentProducts',
     data: () => ({
       dialogTitle:"Add New Product",
       btnTitle:"Add New Product",
       editIndex:0,
+      loader:false,
       product:{
         name:'',
+        type_name:'',
+        category:{},
+        price:'',
+        product:'',
+        pack:'',
+        date:'',
+        type:{},
       },
-      products:['Egg','Chicken'],
-      production_types:['Feed','Broilers'],
+      pack_units:[
+              'Crate',
+              '15 set carton',
+      ],
       valid:true,
       addProductDialog:false,
-      loader:false,
       headers: [
         { text: 'ID', align: 'left', value: 'id',class:'subheading',sortable:false },
-        { text: 'Name', align: 'left', value: 'name',class:'subheading',sortable:false },
+        { text: 'Name', align: 'left', value: 'product_name',class:'subheading',sortable:false },
+        { text: 'Product Type', align: 'left', value: 'type',class:'subheading',sortable:false },
+        { text: 'Category', align: 'left', value: 'category_name',class:'subheading',sortable:false },
+        { text: 'Price (GHS)', align: 'left', value: 'price',class:'subheading',sortable:false },
+        { text: 'Quantity', align: 'left', value: 'quantity',class:'subheading',sortable:false },
+        // { text: 'Pack Units', align: 'left', value: 'unit',class:'subheading',sortable:false },
+        { text: 'Date Added', align: 'left', value: 'date_created',class:'subheading',sortable:false },
         { text: '', value: 'actions',class:'subheading' },
       ],
       singleProduct:{},
     }),
+
     computed: {
       title(){
-        return "All Products ("+this.productList.length+")";
+        return "All Products ("+this.agentProductList.length+")";
       },
-      ...mapGetters(["productList","btn_loader"]),
+      prodId(){
+        return this.product.type;
+      },
+      ...mapGetters(["agentProductList","productList","btn_loader","categoriesList"]),
+    },
+    watch:{
+      prodId(val){
+        console.log(val);
+        this.viewCat({id:val.id});
+      }
     },
     mounted(){
+      this.$store.dispatch('getAgentProductList',{cid:this.cid});
       this.$store.dispatch('getProductList');
     },
     methods:{
       viewCat(item){
         this.$store.commit("setProd",item);
-        this.$router.push("product_category");
+        this.$store.dispatch('getCategoriesList');
       },
       addProduct(){
         this.clear();
@@ -152,7 +226,16 @@
       },
       onProductAdd(){
         this.loader = true;
-        this.$store.dispatch('addProduct',this.product)
+        let agentProduct = {
+          product_name: this.product.product_name,
+          product_id: this.product.product.id,
+          category_id: this.product.category.id,
+          price: this.product.price,
+          quantity: this.product.quantity,
+          company_id: this.cid,
+        }
+
+        this.$store.dispatch('addAgentProduct',agentProduct)
                 .then(() => {
                   this.closeup();
                   this.loader = false;
@@ -186,6 +269,8 @@
       },
       editProduct(payload){
         this.product = payload;
+        this.product.category = payload.categorySet;
+        this.product.product = payload.productSet;
         this.dialogTitle = "Edit Product";
         this.btnTitle = "Edit Product";
         this.addProductDialog = true;

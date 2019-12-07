@@ -22,6 +22,7 @@ import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import axios from 'axios'
+import VeeValidate from 'vee-validate';
 
 Vue.prototype.$http = axios
 // Sets the default url used by all of this axios instance's requests
@@ -32,14 +33,26 @@ const token = localStorage.getItem('token')
 if (token) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
 }
-
 // Sync store with router
 sync(store, router)
-
 Vue.use(Vuetify, {
   iconfont: 'mdi',
   theme
 })
+Vue.use(VeeValidate);
+
+
+Vue.mixin({
+  computed: {
+    userData () {
+      return this.$store.getters.userData;
+    },
+    cid (){
+      return localStorage.getItem('cid');
+    },
+  },
+});
+
 
 Vue.config.productionTip = false
 

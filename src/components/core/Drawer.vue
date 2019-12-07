@@ -17,19 +17,12 @@
         tag="v-list"
         column
       >
-        <v-list-tile avatar>
-          <v-list-tile-avatar
-            color="grey"
-          >
+        <v-list-tile class="ma-4" @click="$router.push('/')">
             <v-img
-              :src="require('../../assets/img/chicken.jpg')"
-              height="60"
-              width="74"
+              :src="require('../../assets/img/akoko_market_logo.png')"
+              height="50"
+              width="24"
             />
-          </v-list-tile-avatar>
-          <v-list-tile-title class="title warning--text">
-           AKOKOMARKET
-          </v-list-tile-title>
         </v-list-tile>
         <v-divider/>
 
@@ -38,9 +31,9 @@
           v-if="responsive"
         >
           <v-text-field
-            class="purple-input search-input"
-            label="Search..."
-            color="purple"
+            class="search-input"
+            label="Search Akokomarket ..."
+            color="primary"
           />
         </v-list-tile>
 
@@ -49,7 +42,7 @@
           v-for="(link, i) in links"
           :key="i"
           :to="link.to"
-          :active-class="color"
+          active-class="primary white--text font-weight-bold"
           avatar
           class="v-list-item"
         >
@@ -120,36 +113,59 @@ import {
 export default {
   data: () => ({
     logo: require('@/assets/img/redditicon.png'),
-    links: [
+    admin_links: [
       {
         to: '/',
         icon: 'mdi-view-dashboard',
         text: 'Dashboard'
       },
       // {
-      //   to: '/dashboard/user-profile',
-      //   icon: 'mdi-account',
-      //   text: 'User Profile'
+      //   to: "/dashboard/requests",
+      //   text: "Market Requests",
+      //   icon: "mdi-cart",
       // },
-      //
       // {
-      //   to: '/dashboard/typography',
-      //   icon: 'mdi-format-font',
-      //   text: 'Typography'
+      //   to: "/dashboard/customers",
+      //   text: "Customers",
+      //   icon: "mdi-account-multiple",
       // },
-      //
+      {
+        to: "/dashboard/company",
+        text: "Company",
+        icon: "mdi-domain",
+      },
+      {
+        to: "/dashboard/depot",
+        text: "Depot",
+        icon: "mdi-home",
+      },
       // {
-      //   to: '/dashboard/icons',
-      //   icon: 'mdi-chart-bubble',
-      //   text: 'Icons'
+      //   to: "/dashboard/transactions",
+      //   text: "Transactions",
+      //   icon: "mdi-cash",
       // },
-      //
       // {
-      //   to: '/dashboard/notifications',
-      //   icon: 'mdi-bell',
-      //   text: 'Notifications'
+      //   to: "/dashboard/sell_survey",
+      //   text: "Sell Survey",
+      //   icon: "mdi-chart-bar-stacked",
       // },
-
+      {
+        to: "/dashboard/products",
+        text: "Products",
+        icon: "mdi-tag",
+      },
+      {
+        to: "/dashboard/manage_users",
+        text: "Manage Users",
+        icon: "mdi-account",
+      },
+    ],
+    agent_links: [
+      {
+        to: '/',
+        icon: 'mdi-view-dashboard',
+        text: 'Dashboard'
+      },
       {
         to: "/dashboard/requests",
         text: "Market Requests",
@@ -160,11 +176,11 @@ export default {
         text: "Customers",
         icon: "mdi-account-multiple",
       },
-      {
-        to: "/dashboard/company",
-        text: "Company",
-        icon: "mdi-domain",
-      },
+      // {
+      //   to: "/dashboard/company",
+      //   text: "Company",
+      //   icon: "mdi-domain",
+      // },
       {
         to: "/dashboard/depot",
         text: "Depot",
@@ -181,7 +197,7 @@ export default {
         icon: "mdi-chart-bar-stacked",
       },
       {
-        to: "/dashboard/products",
+        to: "/dashboard/agent/products",
         text: "Products",
         icon: "mdi-tag",
       },
@@ -202,6 +218,16 @@ export default {
     },
     items () {
       return this.$t('Layout.View.items')
+    },
+    links(){
+      let user = JSON.parse(localStorage.getItem('user'));
+      let account = this.$store.getters.userData.account_type;
+      if(account === 'admin' || user.account_type === 'admin'){
+          return this.admin_links;
+      }
+      if(account === 'agent' || user.account_type === 'agent' ){
+         return this.agent_links;
+      }
     }
   },
   mounted () {
